@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="expretau-runtime" />
+        <module name="expretau-annotations" />
+        <module name="expretau-parser" />
+        <module name="expretau-console" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="expretau" target="1.8" />
+      <module name="expretau-annotations" target="1.8" />
+      <module name="expretau-console" target="1.8" />
+      <module name="expretau-parser" target="1.8" />
+      <module name="expretau-runtime" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
