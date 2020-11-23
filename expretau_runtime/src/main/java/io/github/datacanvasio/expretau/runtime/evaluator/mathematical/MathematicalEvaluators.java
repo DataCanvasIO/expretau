@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.runtime.evaluator;
+package io.github.datacanvasio.expretau.runtime.evaluator.mathematical;
 
 import io.github.datacanvasio.expretau.annotations.Evaluators;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.DoubleEvaluator;
@@ -31,51 +31,51 @@ import java.math.BigDecimal;
     universalEvaluator = UniversalEvaluator.class,
     induceSequence = {Double.class, BigDecimal.class, Long.class, Integer.class}
 )
-public final class MathematicalEvaluators {
+final class MathematicalEvaluators {
     private MathematicalEvaluators() {
     }
 
-    public static double sin(double num) {
+    static double sin(double num) {
         return Math.sin(num);
     }
 
-    public static double cos(double num) {
+    static double cos(double num) {
         return Math.cos(num);
     }
 
-    public static double tan(double num) {
+    static double tan(double num) {
         return Math.tan(num);
     }
 
-    public static double asin(double num) {
+    static double asin(double num) {
         return Math.asin(num);
     }
 
-    public static double acos(double num) {
+    static double acos(double num) {
         return Math.acos(num);
     }
 
-    public static double atan(double num) {
+    static double atan(double num) {
         return Math.atan(num);
     }
 
-    public static double cosh(double num) {
+    static double cosh(double num) {
         return Math.cosh(num);
     }
 
-    public static double sinh(double num) {
+    static double sinh(double num) {
         return Math.sinh(num);
     }
 
-    public static double tanh(double num) {
+    static double tanh(double num) {
         return Math.tanh(num);
     }
 
-    public static double log(double num) {
+    static double log(double num) {
         return Math.log(num);
     }
 
-    public static double exp(double num) {
+    static double exp(double num) {
         return Math.exp(num);
     }
 }

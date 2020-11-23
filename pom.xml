@@ -262,6 +262,7 @@
                     <violationSeverity>warning</violationSeverity>
                     <logViolationsToConsole>true</logViolationsToConsole>
                     <failOnViolation>true</failOnViolation>
+                    <linkXRef>false</linkXRef>
                 </configuration>
                 <dependencies>
                     <dependency>

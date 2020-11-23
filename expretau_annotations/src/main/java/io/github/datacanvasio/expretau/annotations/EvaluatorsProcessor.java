@@ -96,16 +96,6 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         return b.toString();
     }
 
-    @Nonnull
-    private static String getSubPackageName(@Nonnull Element element) {
-        String name = element.getSimpleName().toString();
-        int pos = name.indexOf("Evaluators");
-        if (pos > 0) {
-            name = name.substring(0, pos);
-        }
-        return name.toLowerCase();
-    }
-
     private static TypeName getBoxedType(@Nonnull TypeName type) {
         return type.isPrimitive() ? type.box() : type;
     }
@@ -503,7 +493,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
                 "Class annotated with \"Evaluators\" must not be an inner class.");
         }
-        info.setPackageName(pkg.asType().toString() + "." + getSubPackageName(element));
+        info.setPackageName(pkg.asType().toString());
         info.setOriginClassName(TypeName.get(element.asType()));
         info.setEvaluatorMap(new HashMap<>());
         List<ExecutableElement> executableElements = ElementFilter.methodsIn(element.getEnclosedElements());

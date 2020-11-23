@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.runtime.evaluator;
+package io.github.datacanvasio.expretau.runtime.evaluator.index;
 
 import io.github.datacanvasio.expretau.annotations.Evaluators;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.Evaluator;
@@ -33,35 +33,35 @@ import javax.annotation.Nonnull;
     universalEvaluator = UniversalEvaluator.class,
     induceSequence = {Integer.class, Long.class}
 )
-public final class IndexEvaluators {
+final class IndexEvaluators {
     private IndexEvaluators() {
     }
 
-    public static Integer index(@Nonnull Integer[] array, int index) {
+    static Integer index(@Nonnull Integer[] array, int index) {
         return array[index];
     }
 
-    public static Long index(@Nonnull Long[] array, int index) {
+    static Long index(@Nonnull Long[] array, int index) {
         return array[index];
     }
 
-    public static Boolean index(@Nonnull Boolean[] array, int index) {
+    static Boolean index(@Nonnull Boolean[] array, int index) {
         return array[index];
     }
 
-    public static String index(@Nonnull String[] array, int index) {
+    static String index(@Nonnull String[] array, int index) {
         return array[index];
     }
 
-    public static Object index(@Nonnull Object[] array, int index) {
+    static Object index(@Nonnull Object[] array, int index) {
         return array[index];
     }
 
-    public static Object index(@Nonnull List<?> array, int index) {
+    static Object index(@Nonnull List<?> array, int index) {
         return array.get(index);
     }
 
-    public static Object index(@Nonnull Map<String, ?> map, String index) {
+    static Object index(@Nonnull Map<String, ?> map, String index) {
         return map.get(index);
     }
 }

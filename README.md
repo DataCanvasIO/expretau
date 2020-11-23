@@ -1,8 +1,8 @@
 # ExpreTau
 
-ExpreTau is a simple expression engine written in Java, of which the runtime codes are splitted from parsing and compiling codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system, like [Apach Flink](https://flink.apache.org/).
+ExpreTau is a simple expression engine written in Java, of which the runtime codes are split from parsing and compiling codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system, like [Apache Flink](https://flink.apache.org/).
 
-ExpreTau is just "Expression" and "TAU". The idea of "TAU" is comming from [The Tau Manifesto](https://tauday.com/tau-manifesto).
+ExpreTau is just "Expression" and "TAU". The idea of "TAU" is coming from [The Tau Manifesto](https://tauday.com/tau-manifesto).
 
 ## Getting Started
 
@@ -42,7 +42,7 @@ properties:
 additionalProperties: false
 ```
 
-where variables `a`, `b`, `c`, `d` are defined with specified types. The a `RtExpr` can be compiled like
+where variables `a`, `b`, `c`, `d` are defined with specified types. The a `RtExpr` can be compiled as following,
 
 ```java
 // jsonSchemaInYamlFormat can be a String/InputStream contains the JSON Schema definition.
@@ -63,7 +63,7 @@ Object result = rtExpr.eval(data);
 
 ## Nested Context
 
-In a JSON Schema definition, objects and arrays can be nested into each other, for example
+In a JSON Schema definition, objects and arrays can be nested into each other, for example,
 
 ```yaml
 type: object
@@ -85,9 +85,9 @@ properties:
 additionalProperties: false
 ```
 
-In this context, you can use `a.b` and `a.c` to access the `number` and the `boolean` variables. The syntax looks the same as map index, but they are really seprate variables. On the contrary, `a` is not an existing variable. Also, you can use `d[0]` and `d[1]` to access the `integer` and the `string` variables and `d` is not an existing variable.
+In this context, you can use `a.b` and `a.c` to access the `number` and the `boolean` variables. The syntax looks the same as map index, but they are really separate variables. On the contrary, `a` is not an existing variable. Also, you can use `d[0]` and `d[1]` to access the `integer` and the `string` variables and `d` is not an existing variable.
 
-The `additionalProperties` and `additionalItems` are crucial. If they are set to `true` (which is default in JSON Schema Specification), `a` becomes a variable of `Map` type and `d` of `List` type, which can be accessed by the same syntax, but the operating is a runtime indexing, not a var identifying in compling time.
+The `additionalProperties` and `additionalItems` are crucial. If they are set to `true` (which is default in JSON Schema Specification), `a` becomes a variable of `Map` type and `d` of `List` type, which can be accessed by the same syntax, but the operating is a runtime indexing, not a var identifying in compiling time.
 
 The special variable `$` can be used to access the whole context, so `$.a` is the same as `a`. `$` is useful for a context with an array as root. The parser also looks on `a.b` as `a['b']`, so the syntax to access variables is much like JSONPath.
 
@@ -129,7 +129,7 @@ The special variable `$` can be used to access the whole context, so `$.a` is th
 | Map          | object           | java.util.Map          |
 | Object       | object           | java.lang.Object       |
 
-For JSON Schema of type `array`, the final type is decided as in the following table.
+For JSON Schema of type `array`, the final type is determined as in the following table.
 
 | Value of `additionalItems` | Value of `items.type` | Type Name            |
 | :------------------------- | :-------------------- | :------------------- |
@@ -141,7 +141,7 @@ For JSON Schema of type `array`, the final type is decided as in the following t
 | `true`                     | object                | ObjectArray          |
 | `true`                     |                       | List                 |
 
-For JSON Schema of type `object`, the final type is decided as in the following table.
+For JSON Schema of type `object`, the final type is determined as in the following table.
 
 | Value of `additionalProperties` | Value of `properties` | Type Name            |
 | :------------------------------ | :-------------------- | :------------------- |
@@ -149,7 +149,7 @@ For JSON Schema of type `object`, the final type is decided as in the following 
 | `true`                          | not null              | Map                  |
 | `true`                          | null                  | Object               |
 
-**NOTE**: Some types cannot be written literally in expressions but they do exist in the engine. They can be got by pre-defined constants, variables or intermediate results.
+**NOTE**: Some types cannot be written literally in expressions, but they do exist in the engine. They can be got by pre-defined constants, variables or intermediate results.
 
 ## Constants
 
@@ -166,5 +166,5 @@ There is not "3.14159265" but "TAU". :smile:
 | :----- | :---------- |
 | `expretau_annotations` | An annotation processor to help generating some runtime code. This module is not required to using ExpreTau library. |
 | `expretau_console` | An command line application to parse and evaluate expressions inputted from console. |
-| `expretau_parser` | The ExpreTau parser, requried to parse expression string. |
+| `expretau_parser` | The ExpreTau parser, required to parse expression string. |
 | `expretau_runtime` | The ExpreTau runtime, required to evaluate the compiled runtime object. |
