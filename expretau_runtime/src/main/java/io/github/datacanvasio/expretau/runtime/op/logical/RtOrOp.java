@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtOrOp extends RtLogicalOp {
     private static final long serialVersionUID = -1477334212197197621L;
 
+    /**
+     * Create an RtOrOp. RtNotOp performs logical OR operation.
+     *
+     * @param paras the parameters of the op
+     */
     public RtOrOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

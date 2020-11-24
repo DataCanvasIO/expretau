@@ -23,6 +23,11 @@ public class RtData implements EvalContext {
 
     private final Object[] varSlots;
 
+    /**
+     * Create an RtData with specified number of var slots.
+     *
+     * @param numIndexedVars the number of var slots
+     */
     public RtData(int numIndexedVars) {
         varSlots = new Object[numIndexedVars];
     }

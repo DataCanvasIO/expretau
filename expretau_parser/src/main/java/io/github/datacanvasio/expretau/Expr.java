@@ -24,6 +24,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public interface Expr {
+    /**
+     * Get an RtExpr by compiling this Expr in a specified CompileContext.
+     *
+     * @param ctx the CompileContext
+     * @return the RtExpr
+     * @throws ExpretauCompileException if something is wrong when compiling
+     */
     @Nonnull
     RtExpr compileIn(@Nullable CompileContext ctx) throws ExpretauCompileException;
 }

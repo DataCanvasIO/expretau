@@ -46,16 +46,32 @@ public class DataParser extends ParserFactory {
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
+    /**
+     * Create a DataParser of json format.
+     *
+     * @return a DataParser
+     */
     @Nonnull
     public static DataParser json() {
         return new DataParser(DataFormat.APPLICATION_JSON);
     }
 
+    /**
+     * Create a DataParser of yaml format.
+     *
+     * @return a new DataParser
+     */
     @Nonnull
     public static DataParser yaml() {
         return new DataParser(DataFormat.APPLICATION_YAML);
     }
 
+    /**
+     * Create a DataParser of a specified format.
+     *
+     * @param format the DataFormat
+     * @return a new DataParser
+     */
     @Nonnull
     public static DataParser get(@Nonnull DataFormat format) {
         switch (format) {
@@ -68,26 +84,58 @@ public class DataParser extends ParserFactory {
         }
     }
 
+    /**
+     * Set the schema for this DataParser.
+     *
+     * @param schemaRoot a RtSchemaRoot
+     * @return this DataParser
+     */
     public DataParser schema(RtSchemaRoot schemaRoot) {
         this.schemaRoot = schemaRoot;
         return this;
     }
 
+    /**
+     * Set this DataParser to serialize data with indentations (pretty format).
+     *
+     * @return this DataParser
+     */
     public DataParser pretty() {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         return this;
     }
 
+    /**
+     * Parse a given String into a RtData.
+     *
+     * @param text the given String
+     * @return the RtData
+     * @throws JsonProcessingException if something is wrong
+     */
     public RtData parse(String text) throws JsonProcessingException {
         JsonNode jsonNode = mapper.readTree(text);
         return jsonNodeToData(jsonNode);
     }
 
+    /**
+     * Read from a given InputStream and parse the contents into a RtData.
+     *
+     * @param is the given InputStream
+     * @return the RtData
+     * @throws IOException if something is wrong
+     */
     public RtData parse(InputStream is) throws IOException {
         JsonNode jsonNode = mapper.readTree(new InputStreamReader(is));
         return jsonNodeToData(jsonNode);
     }
 
+    /**
+     * Serialize a RtData into a String.
+     *
+     * @param data the RtData
+     * @return the serialized String
+     * @throws JsonProcessingException if something is wrong
+     */
     public String serialize(RtData data) throws JsonProcessingException {
         Object object = toListMapAccordingSchema(data, schemaRoot.getSchema());
         return mapper.writeValueAsString(object);

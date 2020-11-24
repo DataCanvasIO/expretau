@@ -38,6 +38,12 @@ public class SchemaParser extends ParserFactory {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
+    /**
+     * Get the SchemaParser of the specified DataFormat.
+     *
+     * @param format the DataFormat
+     * @return the SchemaParser
+     */
     @Nonnull
     public static SchemaParser get(@Nonnull DataFormat format) {
         switch (format) {
@@ -50,17 +56,38 @@ public class SchemaParser extends ParserFactory {
         }
     }
 
+    /**
+     * Parse a input String into an RtSchemaRoot.
+     *
+     * @param json the input String
+     * @return the RtSchemaRoot
+     * @throws JsonProcessingException if something is wrong
+     */
     public RtSchemaRoot parse(String json) throws JsonProcessingException {
         Schema schema = mapper.readValue(json, Schema.class);
         return new RtSchemaRoot(schema.createRtSchema());
     }
 
+    /**
+     * Read an given InputStream and parse the contents into an RtSchemaRoot.
+     *
+     * @param is the input String
+     * @return the RtSchemaRoot
+     * @throws IOException if something is wrong
+     */
     public RtSchemaRoot parse(InputStream is) throws IOException {
         Schema schema = mapper.readValue(is, Schema.class);
         return new RtSchemaRoot(schema.createRtSchema());
     }
 
+    /**
+     * Serialize (the RtSchema of) an RtSchemaRoot into a String.
+     *
+     * @param rtSchemaRoot the RtSchemaRoot
+     * @return the String
+     * @throws JsonProcessingException if something is wrong
+     */
     public String serialize(RtSchemaRoot rtSchemaRoot) throws JsonProcessingException {
-        return mapper.writeValueAsString(rtSchemaRoot);
+        return mapper.writeValueAsString(rtSchemaRoot.getSchema());
     }
 }

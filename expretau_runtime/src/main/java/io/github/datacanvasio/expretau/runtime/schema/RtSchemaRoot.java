@@ -29,6 +29,13 @@ public class RtSchemaRoot implements Serializable {
     @Getter
     private final int maxIndex;
 
+    /**
+     * Create an RtSchemaRoot.
+     * RtSchemaRoot is container of RtSchema. This constructor also calls {@code RtSchema::createIndex}, which will
+     * recursively create all index for the children.
+     *
+     * @param schema the RtSchema
+     */
     public RtSchemaRoot(@Nonnull RtSchema schema) {
         this.schema = schema;
         this.maxIndex = schema.createIndex(0);

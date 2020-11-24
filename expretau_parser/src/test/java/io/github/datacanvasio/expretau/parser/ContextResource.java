@@ -33,6 +33,12 @@ public class ContextResource extends ExternalResource {
     private RtSchemaRoot schemaRoot;
     private RtData[] datum;
 
+    /**
+     * Create a ContextResource.
+     *
+     * @param ctxFileName the file name of the schema
+     * @param etxStrings  several datum in YAML format
+     */
     public ContextResource(String ctxFileName, String... etxStrings) {
         this.ctxFileName = ctxFileName;
         this.etxStrings = etxStrings;
@@ -50,10 +56,21 @@ public class ContextResource extends ExternalResource {
         }
     }
 
+    /**
+     * Get the RtSchema corresponding the schema file.
+     *
+     * @return the RtSchema
+     */
     public RtSchema getCtx() {
         return schemaRoot.getSchema();
     }
 
+    /**
+     * Get the RtData corresponding to the data.
+     *
+     * @param index the index of the data
+     * @return the RtData
+     */
     public RtData getEtx(int index) {
         return datum[index];
     }

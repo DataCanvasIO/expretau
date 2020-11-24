@@ -24,13 +24,38 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface Evaluators {
+    /**
+     * Specify the EvaluatorKey class.
+     *
+     * @return the EvaluatorKey class
+     */
     Class<?> evaluatorKey();
 
+    /**
+     * Specify the base class/interface of the generated Evaluators.
+     *
+     * @return the base class/interface
+     */
     Class<?> evaluatorBase();
 
+    /**
+     * Specify the base class of the generated EvaluatorFactory.
+     *
+     * @return the EvaluatorFactory base class
+     */
     Class<?> evaluatorFactory();
 
+    /**
+     * Specify the class of universal evaluator.
+     *
+     * @return the class of universal evaluator
+     */
     Class<?> universalEvaluator();
 
+    /**
+     * Specify the sequence of the type when inducing evaluators by type.
+     *
+     * @return an array of class
+     */
     Class<?>[] induceSequence();
 }

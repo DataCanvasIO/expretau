@@ -32,7 +32,7 @@ public class Var implements Expr {
     private final String name;
 
     @Nonnull
-    public static RtExpr createVar(@Nonnull CompileContext ctx) {
+    static RtExpr createVar(@Nonnull CompileContext ctx) {
         Object id = ctx.getId();
         if (id != null) {
             return new RtVar(id, ctx.getTypeCode());

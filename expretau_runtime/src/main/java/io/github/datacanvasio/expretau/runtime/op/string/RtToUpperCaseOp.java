@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtToUpperCaseOp extends RtStringConversionOp {
     private static final long serialVersionUID = 8584547974619997612L;
 
+    /**
+     * Create an RtToUpperCaseOp. RtToUpperCaseOp converts a String to upper case by {@code String::toUpperCase}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtToUpperCaseOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

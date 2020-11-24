@@ -26,6 +26,12 @@ public class ElementNotExists extends ExpretauCompileException {
     @Getter
     private final CompileContext ctx;
 
+    /**
+     * Exception thrown if a given index cannot be found in a given CompileContext.
+     *
+     * @param index the index
+     * @param ctx   the CompileContext
+     */
     public ElementNotExists(Object index, CompileContext ctx) {
         super(
             "Element \"" + index + "\" not exist in the following context:\n" + ctx

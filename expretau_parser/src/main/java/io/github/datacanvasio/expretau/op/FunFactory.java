@@ -66,6 +66,12 @@ public final class FunFactory {
         funSuppliers.put("exp", () -> new OpWithEvaluator(ExpEvaluatorFactory.INS));
     }
 
+    /**
+     * Get the function (Op) by its name.
+     *
+     * @param funName the name of the function
+     * @return the function (Op)
+     */
     @Nonnull
     public Op getFun(@Nonnull String funName) {
         Supplier<Op> supplier = funSuppliers.get(funName);

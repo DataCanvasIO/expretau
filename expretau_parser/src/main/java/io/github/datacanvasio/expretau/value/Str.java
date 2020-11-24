@@ -26,6 +26,12 @@ public class Str extends Value {
     @Getter
     private final String value;
 
+    /**
+     * Create an Str containing a String.
+     *
+     * @param text the String
+     * @return the Str
+     */
     @Nonnull
     public static Str fromString(String text) {
         return new Str(text);

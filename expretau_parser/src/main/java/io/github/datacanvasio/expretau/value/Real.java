@@ -26,6 +26,12 @@ public class Real extends Value {
     @Getter
     private final Double value;
 
+    /**
+     * Parse a String into an Real, by {@code Double::parseDouble}.
+     *
+     * @param text the String
+     * @return the Real
+     */
     @Nonnull
     public static Real fromString(String text) {
         return new Real(Double.parseDouble(text));

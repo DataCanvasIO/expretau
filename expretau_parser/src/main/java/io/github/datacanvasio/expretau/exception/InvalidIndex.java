@@ -25,6 +25,11 @@ public class InvalidIndex extends ExpretauCompileException {
     @Getter
     private final RtExpr rtExpr;
 
+    /**
+     * Exception thrown when the index for IndexOp is not valid.
+     *
+     * @param index the index
+     */
     public InvalidIndex(RtExpr index) {
         super("Index value must be a const here, but is: \"" + index + "\".");
         this.rtExpr = index;

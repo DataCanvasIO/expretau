@@ -33,6 +33,12 @@ public final class EvaluatorKey implements Serializable {
         this.paraTypeCodes = paraTypeCodes;
     }
 
+    /**
+     * Create a EvaluatorKey of specified type codes.
+     *
+     * @param paraTypeCodes the type codes
+     * @return the EvaluatorKey
+     */
     @Nonnull
     public static EvaluatorKey of(int... paraTypeCodes) {
         return new EvaluatorKey(paraTypeCodes);

@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.op;
+package io.github.datacanvasio.expretau.parser;
 
 import io.github.datacanvasio.expretau.antlr4.ExpretauParser;
+import io.github.datacanvasio.expretau.op.Op;
+import io.github.datacanvasio.expretau.op.OpWithEvaluator;
 import io.github.datacanvasio.expretau.op.logical.AndOp;
 import io.github.datacanvasio.expretau.op.logical.NotOp;
 import io.github.datacanvasio.expretau.op.logical.OrOp;
@@ -45,7 +47,7 @@ public final class OpFactory {
     }
 
     @Nonnull
-    public static Op getUnary(int type) {
+    static Op getUnary(int type) {
         switch (type) {
             case ExpretauParser.ADD:
                 return new OpWithEvaluator(PosEvaluatorFactory.INS);
@@ -59,7 +61,7 @@ public final class OpFactory {
     }
 
     @Nonnull
-    public static Op getBinary(int type) {
+    static Op getBinary(int type) {
         switch (type) {
             case ExpretauParser.ADD:
                 return new OpWithEvaluator(AddEvaluatorFactory.INS);

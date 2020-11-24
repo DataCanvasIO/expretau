@@ -21,7 +21,19 @@ import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 import java.io.Serializable;
 
 public interface Evaluator extends Serializable {
+    /**
+     * Calculate the result of given parameter values.
+     *
+     * @param paras the given parameter values
+     * @return the result
+     * @throws FailGetEvaluator if there is no appropriate Evaluator for the given parameter types
+     */
     Object eval(Object[] paras) throws FailGetEvaluator;
 
+    /**
+     * Get the type code of results. Must return they type code without call <code>eval</code> for compiling use.
+     *
+     * @return the type code
+     */
     int typeCode();
 }

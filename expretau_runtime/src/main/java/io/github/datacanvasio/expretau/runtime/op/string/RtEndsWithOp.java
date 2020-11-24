@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public final class RtEndsWithOp extends RtStringRelationOp {
     private static final long serialVersionUID = 2481487321416281178L;
 
+    /**
+     * Create an RtEndsWithOp. RtEndsWithOp performs string comparing operation by {@code String::endsWith}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtEndsWithOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public final class RtContainsOp extends RtStringRelationOp {
     private static final long serialVersionUID = 140470969300795559L;
 
+    /**
+     * Create an RtContainsOp. RtContainsOp performs string comparing operation by {@code String::contains}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtContainsOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

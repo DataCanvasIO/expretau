@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtNotOp extends RtLogicalOp {
     private static final long serialVersionUID = 6265662676804155262L;
 
+    /**
+     * Create an RtNotOp. RtNotOp performs logical NOT operation.
+     *
+     * @param paras the parameters of the op
+     */
     public RtNotOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

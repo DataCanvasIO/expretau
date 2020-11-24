@@ -25,6 +25,11 @@ public class ExprSyntaxError extends ExpretauParseException {
     @Getter
     private final List<String> errorMessages;
 
+    /**
+     * Exception thrown when there are errors during syntax parsing (by ANTLR4).
+     *
+     * @param errorMessages the error messages coming from ANTLR4
+     */
     public ExprSyntaxError(List<String> errorMessages) {
         super(
             "RT expression syntax error:\n" + String.join("\n", errorMessages)

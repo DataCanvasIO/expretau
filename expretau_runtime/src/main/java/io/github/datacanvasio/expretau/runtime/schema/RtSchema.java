@@ -23,7 +23,18 @@ import java.io.Serializable;
 public abstract class RtSchema implements CompileContext, Serializable {
     private static final long serialVersionUID = -8236170594700377496L;
 
+    /**
+     * Create index of this RtSchema.
+     *
+     * @param start the start number of the index
+     * @return the max index number in this RtSchema plus 1
+     */
     public abstract int createIndex(int start);
 
+    /**
+     * Get the index of this RtSchema if it is a leaf schema, else -1.
+     *
+     * @return the index or -1
+     */
     public abstract int getIndex();
 }

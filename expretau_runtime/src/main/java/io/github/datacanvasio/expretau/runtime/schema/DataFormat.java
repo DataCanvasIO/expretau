@@ -34,6 +34,14 @@ public enum DataFormat {
         this.value = value;
     }
 
+    /**
+     * Get a DataFormat enum from a String.
+     * {@code "application/json"} -> {@code APPLICATION_JSON}
+     * {@code "application/yaml"} -> {@code APPLICATION_YAML}
+     *
+     * @param str the string
+     * @return the DataFormat
+     */
     @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     @Nonnull
     public static DataFormat fromString(String str) {
@@ -46,6 +54,15 @@ public enum DataFormat {
             + "\" for enum type \"" + DataFormat.class.getSimpleName() + "\".");
     }
 
+    /**
+     * Get a DataFormat enum according a fileName.
+     * {@code "*.json"} -> {@code APPLICATION_JSON}
+     * {@code "*.yaml"} -> {@code APPLICATION_YAML}
+     * {@code "*.yml"} -> {@code APPLICATION_YAML}
+     *
+     * @param fileName the file name
+     * @return the DataFormat
+     */
     @Nonnull
     public static DataFormat fromExtension(@Nonnull String fileName) {
         if (fileName.endsWith(".yml") || fileName.endsWith(".yaml")) {

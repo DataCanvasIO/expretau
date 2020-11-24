@@ -19,7 +19,19 @@ package io.github.datacanvasio.expretau.runtime;
 import java.io.Serializable;
 
 public interface EvalContext extends Serializable {
+    /**
+     * Get the value of a variable by its id.
+     *
+     * @param id the id of the variable
+     * @return the value of the variable
+     */
     Object get(Object id);
 
+    /**
+     * Set the value of a variable by its id.
+     *
+     * @param id    the id of the variable
+     * @param value the new value of the variable
+     */
     void set(Object id, Object value);
 }

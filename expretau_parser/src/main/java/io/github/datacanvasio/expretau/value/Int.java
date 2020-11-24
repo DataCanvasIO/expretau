@@ -26,6 +26,12 @@ public class Int extends Value {
     @Getter
     private final Long value;
 
+    /**
+     * Parse a String into an Int, by {@code Long::parseLong}.
+     *
+     * @param text the String
+     * @return the Int
+     */
     @Nonnull
     public static Int fromString(String text) {
         return new Int(Long.parseLong(text));

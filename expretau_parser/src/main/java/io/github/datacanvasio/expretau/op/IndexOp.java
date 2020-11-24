@@ -29,6 +29,9 @@ import io.github.datacanvasio.expretau.var.VarStub;
 import javax.annotation.Nonnull;
 
 public class IndexOp extends OpWithEvaluator {
+    /**
+     * Create an IndexOp. IndexOp can get an element of a Map or an Array.
+     */
     public IndexOp() {
         super(IndexEvaluatorFactory.INS);
     }

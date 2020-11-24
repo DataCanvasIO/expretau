@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtToLowerCaseOp extends RtStringConversionOp {
     private static final long serialVersionUID = -3546267408443749483L;
 
+    /**
+     * Create an RtToLowerCaseOp. RtToLowerCaseOp converts a String to lower case by {@code String::toLowerCase}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtToLowerCaseOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

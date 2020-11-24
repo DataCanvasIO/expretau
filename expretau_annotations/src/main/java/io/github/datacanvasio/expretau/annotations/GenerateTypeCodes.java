@@ -24,6 +24,11 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.SOURCE)
 public @interface GenerateTypeCodes {
+    /**
+     * Specify the type code to generate.
+     *
+     * @return an array of @TypeCode
+     */
     TypeCode[] value();
 
     @interface TypeCode {

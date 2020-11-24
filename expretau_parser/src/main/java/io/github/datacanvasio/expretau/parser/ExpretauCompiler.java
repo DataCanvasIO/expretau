@@ -59,6 +59,13 @@ public class ExpretauCompiler {
         }
     }
 
+    /**
+     * Parse a given String input into an Expr.
+     *
+     * @param input the given String
+     * @return the Expr
+     * @throws ExpretauParseException if errors occurred in parsing
+     */
     public Expr parse(String input) throws ExpretauParseException {
         errorListener = new ExpretauErrorListener();
         ExpretauParser parser = getParser(input);

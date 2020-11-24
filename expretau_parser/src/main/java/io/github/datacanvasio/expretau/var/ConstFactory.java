@@ -33,6 +33,12 @@ public final class ConstFactory {
         constDefinitions.put("E", RtConst.E);
     }
 
+    /**
+     * Get a RtConst by its name.
+     *
+     * @param name the name
+     * @return the RtConst
+     */
     @Nullable
     public RtConst getConst(String name) {
         return constDefinitions.get(name);

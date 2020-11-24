@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtAndOp extends RtLogicalOp {
     private static final long serialVersionUID = 5283729329444724953L;
 
+    /**
+     * Create an RtAndOp. RtAndOp performs logical AND operation.
+     *
+     * @param paras the parameters of the op
+     */
     public RtAndOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

@@ -38,6 +38,13 @@ public class VarStub implements RtExpr {
         throw new RuntimeException("Cannot get typeCode of a VarStub.");
     }
 
+    /**
+     * Get the element by its index in the CompileContext contained in this VarStub, maybe a Var or VarStub.
+     *
+     * @param index the index of the element
+     * @return the Var or VarStub
+     * @throws ElementNotExists when an element of the specified index cannot be found
+     */
     public RtExpr getElement(Object index) throws ElementNotExists {
         CompileContext child = ctx.getChild(index);
         if (child != null) {

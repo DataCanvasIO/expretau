@@ -39,6 +39,12 @@ public class RtVar implements RtExpr {
         return typeCode;
     }
 
+    /**
+     * Set the value of this variable in a specified EvalContext.
+     *
+     * @param etx   the EvalContext
+     * @param value the new value
+     */
     @SuppressWarnings("unused")
     public void set(@Nullable EvalContext etx, Object value) {
         Objects.requireNonNull(etx).set(id, value);

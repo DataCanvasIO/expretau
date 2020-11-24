@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public final class RtStartsWithOp extends RtStringRelationOp {
     private static final long serialVersionUID = 8984520176203100615L;
 
+    /**
+     * Create an RtStartsWithOp. RtStartsWithOp performs string comparing operation by {@code String::startsWith}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtStartsWithOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

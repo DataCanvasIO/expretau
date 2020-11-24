@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public class RtTrimOp extends RtStringConversionOp {
     private static final long serialVersionUID = 936730706377543505L;
 
+    /**
+     * Create an RtTrimOp. RtTrimOp trim the leading and trailing blanks of a String by {@code String::trim}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtTrimOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

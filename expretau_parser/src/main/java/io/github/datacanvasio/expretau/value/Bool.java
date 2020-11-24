@@ -26,6 +26,14 @@ public class Bool extends Value {
     @Getter
     private final Boolean value;
 
+    /**
+     * Create a Bool from a String.
+     * {@code "false"} -> {@code false}
+     * {@code "true"} -> {@code true}
+     *
+     * @param text the String
+     * @return the Bool
+     */
     @Nonnull
     public static Bool fromString(String text) {
         return new Bool(Boolean.parseBoolean(text));

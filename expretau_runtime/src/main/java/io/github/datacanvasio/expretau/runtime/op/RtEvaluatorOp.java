@@ -29,6 +29,12 @@ public class RtEvaluatorOp extends RtOp {
     @Nonnull
     private final Evaluator evaluator;
 
+    /**
+     * Create an RtEvaluatorOp. RtEvaluatorOp delegates the {@code eval} method to an Evaluator.
+     *
+     * @param evaluator the Evaluator
+     * @param paras     the parameters of the op
+     */
     public RtEvaluatorOp(@Nonnull Evaluator evaluator, @Nonnull RtExpr[] paras) {
         super(paras);
         this.evaluator = evaluator;

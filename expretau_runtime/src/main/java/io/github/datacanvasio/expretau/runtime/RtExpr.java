@@ -22,7 +22,19 @@ import java.io.Serializable;
 import javax.annotation.Nullable;
 
 public interface RtExpr extends Serializable {
+    /**
+     * Evaluate the result of this RtExpr in a specified EvalContext.
+     *
+     * @param etx the specified EvalContext
+     * @return the result
+     * @throws FailGetEvaluator if there is no appropriate Evaluator
+     */
     Object eval(@Nullable EvalContext etx) throws FailGetEvaluator;
 
+    /**
+     * Get the type code of results. Must return they type code without call <code>eval</code> for compiling use.
+     *
+     * @return the type code
+     */
     int typeCode();
 }

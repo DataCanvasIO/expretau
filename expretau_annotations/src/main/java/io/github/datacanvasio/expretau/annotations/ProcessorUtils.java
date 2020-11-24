@@ -31,15 +31,34 @@ public final class ProcessorUtils {
     private ProcessorUtils() {
     }
 
+    /**
+     * Get the type code of a type.
+     *
+     * @param type the name of the type
+     * @return the type code
+     */
     public static int typeCode(@Nonnull String type) {
         String name = type.replaceAll("<.*>", "");
         return name.hashCode();
     }
 
+    /**
+     * Get the type code of a TypeName.
+     *
+     * @param type the TypeName
+     * @return the type code
+     */
     public static int typeCode(@Nonnull TypeName type) {
         return typeCode(type.toString());
     }
 
+    /**
+     * Save a source file.
+     *
+     * @param processingEnv the ProcessingEnvironment
+     * @param packageName   the package name
+     * @param typeSpec      the TypeSpec of the class/interface
+     */
     public static void saveSourceFile(
         @Nonnull ProcessingEnvironment processingEnv,
         String packageName,

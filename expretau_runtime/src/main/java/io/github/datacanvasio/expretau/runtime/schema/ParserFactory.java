@@ -29,7 +29,7 @@ public abstract class ParserFactory implements Serializable {
 
     protected final ObjectMapper mapper;
 
-    public ParserFactory(@Nonnull DataFormat format) {
+    protected ParserFactory(@Nonnull DataFormat format) {
         switch (format) {
             case APPLICATION_JSON:
                 mapper = new JsonMapper();

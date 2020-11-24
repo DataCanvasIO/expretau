@@ -32,6 +32,15 @@ public abstract class EvaluatorFactory implements Serializable {
         evaluators = new HashMap<>();
     }
 
+    /**
+     * Get the Evaluator of a specified EvaluatorKey.
+     * A EvaluatorKey is a combination of the type code of parameters. This method would try to return the universal
+     * evaluator if there is not a Evaluator for the specified EvaluatorKey.
+     *
+     * @param key the EvaluatorKey
+     * @return the Evaluator
+     * @throws FailGetEvaluator if there is no appropriate Evaluator
+     */
     @Nonnull
     public final Evaluator getEvaluator(@Nonnull EvaluatorKey key) throws FailGetEvaluator {
         Evaluator evaluator = evaluators.get(key);

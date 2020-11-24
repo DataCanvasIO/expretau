@@ -19,10 +19,20 @@ package io.github.datacanvasio.expretau.exception;
 public class ExpretauParseException extends Exception {
     private static final long serialVersionUID = 4912250231570896776L;
 
+    /**
+     * Exception thrown when there are errors in parsing.
+     *
+     * @param message the error message
+     */
     public ExpretauParseException(String message) {
         super(message);
     }
 
+    /**
+     * Exception thrown when there are errors in parsing.
+     *
+     * @param cause the cause of the exception
+     */
     public ExpretauParseException(Throwable cause) {
         super(cause);
     }

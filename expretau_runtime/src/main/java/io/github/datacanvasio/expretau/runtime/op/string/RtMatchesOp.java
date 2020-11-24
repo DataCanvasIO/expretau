@@ -26,6 +26,11 @@ import javax.annotation.Nullable;
 public final class RtMatchesOp extends RtStringRelationOp {
     private static final long serialVersionUID = -1607737046817938281L;
 
+    /**
+     * Create an RtMatchesOp. RtMatchesOp performs string matching operation by {@code String::matches}.
+     *
+     * @param paras the parameters of the op
+     */
     public RtMatchesOp(@Nonnull RtExpr[] paras) {
         super(paras);
     }

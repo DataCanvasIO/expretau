@@ -17,9 +17,27 @@
 package io.github.datacanvasio.expretau.runtime;
 
 public interface CompileContext {
+    /**
+     * Get the variable id of this context if it stands for a variable, or {@code null}.
+     *
+     * @return the id
+     */
     Object getId();
 
+    /**
+     * Get the type code of this context.
+     * Type codes are mostly hashed from the type name of Java classes.
+     *
+     * @return the type code
+     */
     int getTypeCode();
 
+    /**
+     * Get a specified child context of this context.
+     * A CompileContext may have child contexts.
+     *
+     * @param index then index of the child, can be a String (for Map index) or Integer (for Array index)
+     * @return the child context
+     */
     CompileContext getChild(Object index);
 }

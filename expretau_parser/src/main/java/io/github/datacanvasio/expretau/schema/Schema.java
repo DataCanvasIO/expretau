@@ -33,5 +33,10 @@ import io.github.datacanvasio.expretau.runtime.schema.RtSchema;
     @JsonSubTypes.Type(SchemaArray.class),
 })
 public abstract class Schema {
+    /**
+     * Create an RtSchema from this Schema.
+     *
+     * @return the RtSchema
+     */
     public abstract RtSchema createRtSchema();
 }
