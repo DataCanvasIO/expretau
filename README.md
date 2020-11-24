@@ -1,7 +1,6 @@
 # ExpreTau
 
-| ![Build with Maven](https://github.com/DataCanvasIO/expretau/workflows/Build%20with%20Maven/badge.svg) | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau) |
-| :---: | :---: |
+![Build with Maven](https://github.com/DataCanvasIO/expretau/workflows/Build%20with%20Maven/badge.svg)
 
 ExpreTau is a simple expression engine written in Java, of which the runtime codes are split from parsing and compiling codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system, like [Apache Flink](https://flink.apache.org/).
 
@@ -187,7 +186,7 @@ There is not "3.14159265" but "TAU". :smile:
 
 | Module | Description | Documentation |
 | :----- | :---------- | :------------ |
-| `expretau_annotations` | An annotation processor to help generating some runtime code. This module is not required to using ExpreTau library. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-annotations) |
-| `expretau_console` | An command line application to parse and evaluate expressions inputted from console. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-console) |
-| `expretau_parser` | The ExpreTau parser, required to parse expression string. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-parser) |
-| `expretau_runtime` | The ExpreTau runtime, required to evaluate the compiled runtime object. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-runtime) |
+| `expretau_annotations` | An annotation processor to help generating some runtime code. This module is not required to using ExpreTau library. | [![javadoc](https://javadoc.io/badge2/io.github.datacanvasio.expretau/expretau-annotations/javadoc.svg)](https://javadoc.io/doc/io.github.datacanvasio.expretau/expretau-annotations) |
+| `expretau_console` | An command line application to parse and evaluate expressions inputted from console. | [![javadoc](https://javadoc.io/badge2/io.github.datacanvasio.expretau/expretau-console/javadoc.svg)](https://javadoc.io/doc/io.github.datacanvasio.expretau/expretau-console) |
+| `expretau_parser` | The ExpreTau parser, required to parse expression string. | [![javadoc](https://javadoc.io/badge2/io.github.datacanvasio.expretau/expretau-parser/javadoc.svg)](https://javadoc.io/doc/io.github.datacanvasio.expretau/expretau-parser) |
+| `expretau_runtime` | The ExpreTau runtime, required to evaluate the compiled runtime object. | [![javadoc](https://javadoc.io/badge2/io.github.datacanvasio.expretau/expretau-runtime/javadoc.svg)](https://javadoc.io/doc/io.github.datacanvasio.expretau/expretau-runtime) |
