@@ -22,7 +22,27 @@ The `RtExpr` object can do `eval` multiple times in different `EvalContext` afte
 
 Module `expretau_console` can be simply used as a command line calculator, which is based on ExpreTau.
 
-### Variables and Context
+## Dependencies
+
+```xml
+<dependencies>
+    <!-- Required if you want to do parsing and compiling -->
+    <dependency>
+        <groupId>io.github.datacanvasio.expretau</groupId>
+        <artifactId>expretau-parser</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+
+    <!-- Required if you want to do evaluating -->
+    <dependency>
+        <groupId>io.github.datacanvasio.expretau</groupId>
+        <artifactId>expretau-runtime</artifactId>
+        <version>1.0.0</version>
+    </dependency>
+</dependencies>
+```
+
+## Variables and Context
 
 Variables can be used in expressions, but a `CompileContext` must be provided to define the types of variables.
 
@@ -162,9 +182,9 @@ There is not "3.14159265" but "TAU". :smile:
 
 ## Modules
 
-| Module | Description |
-| :----- | :---------- |
-| `expretau_annotations` | An annotation processor to help generating some runtime code. This module is not required to using ExpreTau library. |
-| `expretau_console` | An command line application to parse and evaluate expressions inputted from console. |
-| `expretau_parser` | The ExpreTau parser, required to parse expression string. |
-| `expretau_runtime` | The ExpreTau runtime, required to evaluate the compiled runtime object. |
+| Module | Description | Documentation |
+| :----- | :---------- | :------------ |
+| `expretau_annotations` | An annotation processor to help generating some runtime code. This module is not required to using ExpreTau library. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-annotations) |
+| `expretau_console` | An command line application to parse and evaluate expressions inputted from console. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-console) |
+| `expretau_parser` | The ExpreTau parser, required to parse expression string. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-parser) |
+| `expretau_runtime` | The ExpreTau runtime, required to evaluate the compiled runtime object. | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau/expretau-runtime) |
