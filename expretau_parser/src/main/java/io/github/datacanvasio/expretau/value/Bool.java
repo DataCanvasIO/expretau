@@ -28,8 +28,8 @@ public class Bool extends Value {
 
     /**
      * Create a Bool from a String.
-     * {@code "false"} -> {@code false}
-     * {@code "true"} -> {@code true}
+     * {@code "false"} -&gt; {@code false}
+     * {@code "true"} -&gt; {@code true}
      *
      * @param text the String
      * @return the Bool

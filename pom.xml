@@ -99,6 +99,7 @@
         <maven-source.version>3.2.1</maven-source.version>
         <maven-javadoc.version>3.2.0</maven-javadoc.version>
         <maven-gpg.version>1.6</maven-gpg.version>
+        <nexus-staging.version>1.6.8</nexus-staging.version>
     </properties>
 
     <dependencyManagement>
@@ -248,6 +249,11 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>${maven-gpg.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -325,6 +331,16 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

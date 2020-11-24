@@ -36,8 +36,8 @@ public enum DataFormat {
 
     /**
      * Get a DataFormat enum from a String.
-     * {@code "application/json"} -> {@code APPLICATION_JSON}
-     * {@code "application/yaml"} -> {@code APPLICATION_YAML}
+     * {@code "application/json"} -&gt; {@code APPLICATION_JSON}
+     * {@code "application/yaml"} -&gt; {@code APPLICATION_YAML}
      *
      * @param str the string
      * @return the DataFormat
@@ -56,9 +56,9 @@ public enum DataFormat {
 
     /**
      * Get a DataFormat enum according a fileName.
-     * {@code "*.json"} -> {@code APPLICATION_JSON}
-     * {@code "*.yaml"} -> {@code APPLICATION_YAML}
-     * {@code "*.yml"} -> {@code APPLICATION_YAML}
+     * {@code "*.json"} -&gt; {@code APPLICATION_JSON}
+     * {@code "*.yaml"} -&gt; {@code APPLICATION_YAML}
+     * {@code "*.yml"} -&gt; {@code APPLICATION_YAML}
      *
      * @param fileName the file name
      * @return the DataFormat
