@@ -1,6 +1,7 @@
 # ExpreTau
 
-![Build with Maven](https://github.com/DataCanvasIO/expretau/workflows/Build%20with%20Maven/badge.svg)
+| ![Build with Maven](https://github.com/DataCanvasIO/expretau/workflows/Build%20with%20Maven/badge.svg) | [javadoc](https://www.javadoc.io/doc/io.github.datacanvasio.expretau) |
+| :---: | :---: |
 
 ExpreTau is a simple expression engine written in Java, of which the runtime codes are split from parsing and compiling codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system, like [Apache Flink](https://flink.apache.org/).
 
