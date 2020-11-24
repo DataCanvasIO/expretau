@@ -1,13 +1,11 @@
 name: Build with Maven
-env:
-  default-branch: master
 on:
   push:
     branches:
-      - $default-branch
+      - master
   pull_request:
     branches:
-      - $default-branch
+      - master
 jobs:
   build:
     name: Build with Maven
