@@ -14,9 +14,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="expretau" target="1.8" />
       <module name="expretau-annotations" target="1.8" />
       <module name="expretau-console" target="1.8" />
+      <module name="expretau-parent" target="1.8" />
       <module name="expretau-parser" target="1.8" />
       <module name="expretau-runtime" target="1.8" />
     </bytecodeTargetLevel>
