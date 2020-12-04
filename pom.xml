@@ -76,7 +76,7 @@
         <jackson.version>2.11.2</jackson.version>
 
         <!-- facilities -->
-        <lombok.version>1.18.12</lombok.version>
+        <lombok.version>1.18.16</lombok.version>
         <auto-service.version>1.0-rc6</auto-service.version>
         <javapoet.version>1.12.1</javapoet.version>
 

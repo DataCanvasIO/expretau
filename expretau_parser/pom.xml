@@ -112,7 +112,9 @@
                 <configuration>
                     <visitor>true</visitor>
                     <listener>false</listener>
-                    <outputDirectory>target/generated-sources/io/github/datacanvasio/expretau/antlr4</outputDirectory>
+                    <outputDirectory>
+                        ${generated.sources.directory}/antlr4/io/github/datacanvasio/expretau/antlr4
+                    </outputDirectory>
                 </configuration>
                 <executions>
                     <execution>
