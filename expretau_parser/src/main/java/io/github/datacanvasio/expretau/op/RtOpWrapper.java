@@ -14,15 +14,20 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.op.logical;
+package io.github.datacanvasio.expretau.op;
 
-import io.github.datacanvasio.expretau.op.Op;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
-import io.github.datacanvasio.expretau.runtime.op.logical.RtOrOp;
+import io.github.datacanvasio.expretau.runtime.op.RtOp;
+import lombok.RequiredArgsConstructor;
 
-public class OrOp extends Op {
+import java.util.function.Function;
+
+@RequiredArgsConstructor
+class RtOpWrapper extends Op {
+    private final Function<RtExpr[], RtOp> rtOpMaker;
+
     @Override
-    protected RtOrOp createRtOp(RtExpr[] rtExprArray) {
-        return new RtOrOp(rtExprArray);
+    protected RtOp createRtOp(RtExpr[] rtExprArray) {
+        return rtOpMaker.apply(rtExprArray);
     }
 }

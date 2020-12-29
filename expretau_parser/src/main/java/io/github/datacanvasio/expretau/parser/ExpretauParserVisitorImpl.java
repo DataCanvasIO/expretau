@@ -22,6 +22,7 @@ import io.github.datacanvasio.expretau.antlr4.ExpretauParserBaseVisitor;
 import io.github.datacanvasio.expretau.op.FunFactory;
 import io.github.datacanvasio.expretau.op.IndexOp;
 import io.github.datacanvasio.expretau.op.Op;
+import io.github.datacanvasio.expretau.op.OpFactory;
 import io.github.datacanvasio.expretau.value.Bool;
 import io.github.datacanvasio.expretau.value.Int;
 import io.github.datacanvasio.expretau.value.Real;

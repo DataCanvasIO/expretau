@@ -14,27 +14,30 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.runtime.op.string;
+package io.github.datacanvasio.expretau.runtime.op;
 
+import io.github.datacanvasio.expretau.runtime.EvalContext;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
+import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-public final class RtMatchesOp extends RtStringRelationOp {
-    private static final long serialVersionUID = -1607737046817938281L;
+public abstract class RtFun extends RtOp {
+    private static final long serialVersionUID = -2628177417370658354L;
 
-    /**
-     * Create an RtMatchesOp. RtMatchesOp performs string matching operation by {@code String::matches}.
-     *
-     * @param paras the parameters of the op
-     */
-    public RtMatchesOp(@Nonnull RtExpr[] paras) {
+    protected RtFun(@Nonnull RtExpr[] paras) {
         super(paras);
     }
 
-    @Nonnull
+    protected abstract Object fun(@Nonnull Object[] values);
+
     @Override
-    protected Object fun(@Nonnull Object[] values) {
-        return ((String) values[0]).matches((String) values[1]);
+    public Object eval(@Nullable EvalContext etx) throws FailGetEvaluator {
+        Object[] values = new Object[paras.length];
+        for (int i = 0; i < paras.length; ++i) {
+            values[i] = paras[i].eval(etx);
+        }
+        return fun(values);
     }
 }

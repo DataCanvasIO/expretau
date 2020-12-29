@@ -16,10 +16,7 @@
 
 package io.github.datacanvasio.expretau.op;
 
-import io.github.datacanvasio.expretau.op.string.ReplaceOp;
-import io.github.datacanvasio.expretau.op.string.ToLowerCaseOp;
-import io.github.datacanvasio.expretau.op.string.ToUpperCaseOp;
-import io.github.datacanvasio.expretau.op.string.TrimOp;
+import io.github.datacanvasio.expretau.runtime.RtExpr;
 import io.github.datacanvasio.expretau.runtime.evaluator.arithmetic.AbsEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.AcosEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.AsinEvaluatorFactory;
@@ -32,10 +29,16 @@ import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinEvaluat
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinhEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanhEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.op.RtOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtReplaceOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtToLowerCaseOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtToUpperCaseOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtTrimOp;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import javax.annotation.Nonnull;
 
@@ -46,11 +49,6 @@ public final class FunFactory {
 
     private FunFactory() {
         funSuppliers = new HashMap<>(64);
-        // String
-        funSuppliers.put("toLowerCase", ToLowerCaseOp::new);
-        funSuppliers.put("toUpperCase", ToUpperCaseOp::new);
-        funSuppliers.put("trim", TrimOp::new);
-        funSuppliers.put("replace", ReplaceOp::new);
         // Mathematical
         funSuppliers.put("abs", () -> new OpWithEvaluator(AbsEvaluatorFactory.INS));
         funSuppliers.put("sin", () -> new OpWithEvaluator(SinEvaluatorFactory.INS));
@@ -64,6 +62,24 @@ public final class FunFactory {
         funSuppliers.put("tanh", () -> new OpWithEvaluator(TanhEvaluatorFactory.INS));
         funSuppliers.put("log", () -> new OpWithEvaluator(LogEvaluatorFactory.INS));
         funSuppliers.put("exp", () -> new OpWithEvaluator(ExpEvaluatorFactory.INS));
+        // String
+        registerUdf("toLowerCase", RtToLowerCaseOp::new);
+        registerUdf("toUpperCase", RtToUpperCaseOp::new);
+        registerUdf("trim", RtTrimOp::new);
+        registerUdf("replace", RtReplaceOp::new);
+    }
+
+    /**
+     * Register a user defined funtion.
+     *
+     * @param funName     the name of the function
+     * @param funSupplier a function to create the runtime function object
+     */
+    public void registerUdf(
+        String funName,
+        Function<RtExpr[], RtOp> funSupplier
+    ) {
+        funSuppliers.put(funName, () -> new RtOpWrapper(funSupplier));
     }
 
     /**

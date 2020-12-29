@@ -16,12 +16,9 @@
 
 package io.github.datacanvasio.expretau.runtime.op.string;
 
-import io.github.datacanvasio.expretau.runtime.EvalContext;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
-import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class RtToLowerCaseOp extends RtStringConversionOp {
     private static final long serialVersionUID = -3546267408443749483L;
@@ -35,8 +32,9 @@ public class RtToLowerCaseOp extends RtStringConversionOp {
         super(paras);
     }
 
+    @Nonnull
     @Override
-    public String eval(@Nullable EvalContext etx) throws FailGetEvaluator {
-        return ((String) paras[0].eval(etx)).toLowerCase();
+    protected Object fun(@Nonnull Object[] values) {
+        return ((String) values[0]).toLowerCase();
     }
 }

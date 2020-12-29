@@ -182,6 +182,46 @@ For JSON Schema of type `object`, the final type is determined as in the followi
 
 There is not "3.14159265" but "TAU". :smile:
 
+## User defined functions
+
+It is simple to add an user defined function to ExpreTau.
+
+First, define a class like
+
+```java
+public class HelloOp extends RtFun {
+    private static final long serialVersionUID = -8060697833705004059L;
+
+    protected HelloOp(@Nonnull RtExpr[] paras) {
+        super(paras);
+    }
+
+    @Override
+    protected Object fun(@Nonnull Object[] values) {
+        return "Hello " + values[0];
+    }
+
+    @Override
+    public int typeCode() {
+        return TypeCode.STRING;
+    }
+}
+```
+
+Then register it to the `FunFactory`
+
+```java
+FunFactory.INS.registerUdf("hello", HelloOp::new);
+```
+
+Now you can use the `hello` function
+
+```java
+Expr expr = ExpretauCompiler.INS.parse("hello('world')");
+RtExpr rtExpr = expr.compileIn(null);
+System.out.println(rtExpr.eval(null));
+```
+
 ## Modules
 
 | Module | Description | Documentation |

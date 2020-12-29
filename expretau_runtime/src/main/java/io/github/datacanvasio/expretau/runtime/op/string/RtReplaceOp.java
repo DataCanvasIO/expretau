@@ -16,12 +16,9 @@
 
 package io.github.datacanvasio.expretau.runtime.op.string;
 
-import io.github.datacanvasio.expretau.runtime.EvalContext;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
-import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class RtReplaceOp extends RtStringConversionOp {
     private static final long serialVersionUID = 5736080205736344227L;
@@ -35,11 +32,9 @@ public class RtReplaceOp extends RtStringConversionOp {
         super(paras);
     }
 
+    @Nonnull
     @Override
-    public String eval(@Nullable EvalContext etx) throws FailGetEvaluator {
-        return ((String) paras[0].eval(etx)).replace(
-            (String) paras[1].eval(etx),
-            (String) paras[2].eval(etx)
-        );
+    protected Object fun(@Nonnull Object[] values) {
+        return ((String) values[0]).replace((String) values[1], (String) values[2]);
     }
 }

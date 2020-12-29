@@ -16,12 +16,9 @@
 
 package io.github.datacanvasio.expretau.runtime.op.string;
 
-import io.github.datacanvasio.expretau.runtime.EvalContext;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
-import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class RtTrimOp extends RtStringConversionOp {
     private static final long serialVersionUID = 936730706377543505L;
@@ -35,8 +32,9 @@ public class RtTrimOp extends RtStringConversionOp {
         super(paras);
     }
 
+    @Nonnull
     @Override
-    public String eval(@Nullable EvalContext etx) throws FailGetEvaluator {
-        return ((String) paras[0].eval(etx)).trim();
+    protected Object fun(@Nonnull Object[] values) {
+        return ((String) values[0]).trim();
     }
 }

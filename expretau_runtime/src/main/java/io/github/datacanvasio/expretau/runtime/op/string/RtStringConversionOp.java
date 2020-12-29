@@ -18,11 +18,11 @@ package io.github.datacanvasio.expretau.runtime.op.string;
 
 import io.github.datacanvasio.expretau.runtime.RtExpr;
 import io.github.datacanvasio.expretau.runtime.TypeCode;
-import io.github.datacanvasio.expretau.runtime.op.RtOp;
+import io.github.datacanvasio.expretau.runtime.op.RtFun;
 
 import javax.annotation.Nonnull;
 
-public abstract class RtStringConversionOp extends RtOp {
+public abstract class RtStringConversionOp extends RtFun {
     private static final long serialVersionUID = -5669959627648125041L;
 
     protected RtStringConversionOp(@Nonnull RtExpr[] paras) {

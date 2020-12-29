@@ -14,18 +14,9 @@
  * limitations under the License.
  */
 
-package io.github.datacanvasio.expretau.parser;
+package io.github.datacanvasio.expretau.op;
 
 import io.github.datacanvasio.expretau.antlr4.ExpretauParser;
-import io.github.datacanvasio.expretau.op.Op;
-import io.github.datacanvasio.expretau.op.OpWithEvaluator;
-import io.github.datacanvasio.expretau.op.logical.AndOp;
-import io.github.datacanvasio.expretau.op.logical.NotOp;
-import io.github.datacanvasio.expretau.op.logical.OrOp;
-import io.github.datacanvasio.expretau.op.string.ContainsOp;
-import io.github.datacanvasio.expretau.op.string.EndsWithOp;
-import io.github.datacanvasio.expretau.op.string.MatchesOp;
-import io.github.datacanvasio.expretau.op.string.StartsWithOp;
 import io.github.datacanvasio.expretau.runtime.evaluator.arithmetic.AddEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.arithmetic.DivEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.arithmetic.MulEvaluatorFactory;
@@ -38,6 +29,13 @@ import io.github.datacanvasio.expretau.runtime.evaluator.relational.GtEvaluatorF
 import io.github.datacanvasio.expretau.runtime.evaluator.relational.LeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.relational.LtEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.relational.NeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.op.logical.RtAndOp;
+import io.github.datacanvasio.expretau.runtime.op.logical.RtNotOp;
+import io.github.datacanvasio.expretau.runtime.op.logical.RtOrOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtContainsOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtEndsWithOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtMatchesOp;
+import io.github.datacanvasio.expretau.runtime.op.string.RtStartsWithOp;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import javax.annotation.Nonnull;
@@ -46,22 +44,34 @@ public final class OpFactory {
     private OpFactory() {
     }
 
+    /**
+     * Get an unary Op by its type.
+     *
+     * @param type the type
+     * @return the Op
+     */
     @Nonnull
-    static Op getUnary(int type) {
+    public static Op getUnary(int type) {
         switch (type) {
             case ExpretauParser.ADD:
                 return new OpWithEvaluator(PosEvaluatorFactory.INS);
             case ExpretauParser.SUB:
                 return new OpWithEvaluator(NegEvaluatorFactory.INS);
             case ExpretauParser.NOT:
-                return new NotOp();
+                return new RtOpWrapper(RtNotOp::new);
             default:
                 throw new ParseCancellationException("Invalid operator type: " + type);
         }
     }
 
+    /**
+     * Get a binary Op by its type.
+     *
+     * @param type the type
+     * @return the Op
+     */
     @Nonnull
-    static Op getBinary(int type) {
+    public static Op getBinary(int type) {
         switch (type) {
             case ExpretauParser.ADD:
                 return new OpWithEvaluator(AddEvaluatorFactory.INS);
@@ -84,17 +94,17 @@ public final class OpFactory {
             case ExpretauParser.NE:
                 return new OpWithEvaluator(NeEvaluatorFactory.INS);
             case ExpretauParser.AND:
-                return new AndOp();
+                return new RtOpWrapper(RtAndOp::new);
             case ExpretauParser.OR:
-                return new OrOp();
+                return new RtOpWrapper(RtOrOp::new);
             case ExpretauParser.STARTSWITH:
-                return new StartsWithOp();
+                return new RtOpWrapper(RtStartsWithOp::new);
             case ExpretauParser.ENDSWITH:
-                return new EndsWithOp();
+                return new RtOpWrapper(RtEndsWithOp::new);
             case ExpretauParser.CONTAINS:
-                return new ContainsOp();
+                return new RtOpWrapper(RtContainsOp::new);
             case ExpretauParser.MATCHES:
-                return new MatchesOp();
+                return new RtOpWrapper(RtMatchesOp::new);
             default:
                 throw new ParseCancellationException("Invalid operator type: " + type);
         }
