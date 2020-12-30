@@ -23,9 +23,10 @@ import io.github.datacanvasio.expretau.runtime.schema.RtSchema;
 import io.github.datacanvasio.expretau.runtime.schema.RtSchemaRoot;
 import io.github.datacanvasio.expretau.schema.SchemaParser;
 import lombok.Getter;
-import org.junit.rules.ExternalResource;
+import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 
-public class ContextResource extends ExternalResource {
+public class ContextResource implements BeforeAllCallback {
     private final String ctxFileName;
     private final String[] etxStrings;
 
@@ -42,18 +43,6 @@ public class ContextResource extends ExternalResource {
     public ContextResource(String ctxFileName, String... etxStrings) {
         this.ctxFileName = ctxFileName;
         this.etxStrings = etxStrings;
-    }
-
-    @Override
-    protected void before() throws Throwable {
-        super.before();
-        schemaRoot = SchemaParser.get(DataFormat.fromExtension(ctxFileName))
-            .parse(ContextResource.class.getResourceAsStream(ctxFileName));
-        DataParser parser = DataParser.yaml().schema(schemaRoot);
-        datum = new RtData[etxStrings.length];
-        for (int i = 0; i < datum.length; i++) {
-            datum[i] = parser.parse(etxStrings[i]);
-        }
     }
 
     /**
@@ -73,5 +62,16 @@ public class ContextResource extends ExternalResource {
      */
     public RtData getEtx(int index) {
         return datum[index];
+    }
+
+    @Override
+    public void beforeAll(ExtensionContext extensionContext) throws Exception {
+        schemaRoot = SchemaParser.get(DataFormat.fromExtension(ctxFileName))
+            .parse(ContextResource.class.getResourceAsStream(ctxFileName));
+        DataParser parser = DataParser.yaml().schema(schemaRoot);
+        datum = new RtData[etxStrings.length];
+        for (int i = 0; i < datum.length; i++) {
+            datum[i] = parser.parse(etxStrings[i]);
+        }
     }
 }

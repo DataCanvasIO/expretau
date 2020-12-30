@@ -16,10 +16,10 @@
 
 package io.github.datacanvasio.expretau.runtime;
 
-import lombok.RequiredArgsConstructor;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,46 +29,44 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@RunWith(Parameterized.class)
-@RequiredArgsConstructor
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class TestTypeCodesEquality {
-    private final Class<?> clazz;
-    private final int typeCode;
-
     @Nonnull
-    @Parameterized.Parameters(name = "{index}: {0} == {1}")
-    public static Object[][] getParameters() {
-        return new Object[][]{
-            {Boolean.class, TypeCode.BOOLEAN},
-            {Integer.class, TypeCode.INTEGER},
-            {Long.class, TypeCode.LONG},
-            {Double.class, TypeCode.DOUBLE},
-            {BigDecimal.class, TypeCode.DECIMAL},
-            {String.class, TypeCode.STRING},
-            {Object.class, TypeCode.OBJECT},
-            {Boolean[].class, TypeCode.BOOLEAN_ARRAY},
-            {Integer[].class, TypeCode.INTEGER_ARRAY},
-            {Long[].class, TypeCode.LONG_ARRAY},
-            {Double[].class, TypeCode.DOUBLE_ARRAY},
-            {BigDecimal[].class, TypeCode.DECIMAL_ARRAY},
-            {String[].class, TypeCode.STRING_ARRAY},
-            {Object[].class, TypeCode.OBJECT_ARRAY},
-            {List.class, TypeCode.LIST},
-            {LinkedList.class, TypeCode.LIST},
-            {ArrayList.class, TypeCode.LIST},
-            {Map.class, TypeCode.MAP},
-            {HashMap.class, TypeCode.MAP},
-            {TreeMap.class, TypeCode.MAP},
-            {LinkedHashMap.class, TypeCode.MAP},
-        };
+    private static Stream<Arguments> getParameters() {
+        return Stream.of(
+            arguments(Boolean.class, TypeCode.BOOLEAN),
+            arguments(Integer.class, TypeCode.INTEGER),
+            arguments(Long.class, TypeCode.LONG),
+            arguments(Double.class, TypeCode.DOUBLE),
+            arguments(BigDecimal.class, TypeCode.DECIMAL),
+            arguments(String.class, TypeCode.STRING),
+            arguments(Object.class, TypeCode.OBJECT),
+            arguments(Boolean[].class, TypeCode.BOOLEAN_ARRAY),
+            arguments(Integer[].class, TypeCode.INTEGER_ARRAY),
+            arguments(Long[].class, TypeCode.LONG_ARRAY),
+            arguments(Double[].class, TypeCode.DOUBLE_ARRAY),
+            arguments(BigDecimal[].class, TypeCode.DECIMAL_ARRAY),
+            arguments(String[].class, TypeCode.STRING_ARRAY),
+            arguments(Object[].class, TypeCode.OBJECT_ARRAY),
+            arguments(List.class, TypeCode.LIST),
+            arguments(LinkedList.class, TypeCode.LIST),
+            arguments(ArrayList.class, TypeCode.LIST),
+            arguments(Map.class, TypeCode.MAP),
+            arguments(HashMap.class, TypeCode.MAP),
+            arguments(TreeMap.class, TypeCode.MAP),
+            arguments(LinkedHashMap.class, TypeCode.MAP)
+        );
     }
 
-    @Test
-    public void testCodeEquality() {
+    @ParameterizedTest
+    @MethodSource("getParameters")
+    public void testCodeEquality(Class<?> clazz, int typeCode) {
         assertEquals(TypeCodes.getTypeCode(clazz), typeCode);
     }
 }

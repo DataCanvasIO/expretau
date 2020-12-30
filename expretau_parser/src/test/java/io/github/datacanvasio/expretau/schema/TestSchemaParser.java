@@ -19,24 +19,24 @@ package io.github.datacanvasio.expretau.schema;
 import io.github.datacanvasio.expretau.runtime.TypeCode;
 import io.github.datacanvasio.expretau.runtime.schema.RtSchema;
 import io.github.datacanvasio.expretau.runtime.schema.RtSchemaRoot;
-import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class TestSchemaParser {
     @Test
     public void testSimpleVars() throws Exception {
         RtSchemaRoot root = SchemaParser.YAML.parse(
             TestSchemaParser.class.getResourceAsStream("/simple_vars.yml")
         );
-        assertThat(root.getMaxIndex(), is(4));
+        assertThat(root.getMaxIndex()).isEqualTo(4);
         RtSchema schema = root.getSchema();
-        assertThat(schema.getChild("a").getTypeCode(), CoreMatchers.is(TypeCode.LONG));
-        assertThat(schema.getChild("b").getTypeCode(), is(TypeCode.DOUBLE));
-        assertThat(schema.getChild("c").getTypeCode(), is(TypeCode.BOOLEAN));
-        assertThat(schema.getChild("d").getTypeCode(), is(TypeCode.STRING));
+        assertThat(schema.getChild("a").getTypeCode()).isEqualTo(TypeCode.LONG);
+        assertThat(schema.getChild("b").getTypeCode()).isEqualTo(TypeCode.DOUBLE);
+        assertThat(schema.getChild("c").getTypeCode()).isEqualTo(TypeCode.BOOLEAN);
+        assertThat(schema.getChild("d").getTypeCode()).isEqualTo(TypeCode.STRING);
     }
 
     @Test
@@ -44,17 +44,17 @@ public class TestSchemaParser {
         RtSchemaRoot root = SchemaParser.YAML.parse(
             TestSchemaParser.class.getResourceAsStream("/composite_vars.yml")
         );
-        assertThat(root.getMaxIndex(), is(8));
+        assertThat(root.getMaxIndex()).isEqualTo(8);
         RtSchema schema = root.getSchema();
-        assertThat(schema.getChild("arrA").getTypeCode(), is(TypeCode.LONG_ARRAY));
-        assertThat(schema.getChild("arrB").getTypeCode(), is(TypeCode.STRING_ARRAY));
-        assertThat(schema.getChild("arrC").getTypeCode(), is(TypeCode.LIST));
-        assertThat(schema.getChild("arrD").getTypeCode(), is(TypeCode.TUPLE));
-        assertThat(schema.getChild("arrD").getChild(0).getTypeCode(), is(TypeCode.LONG));
-        assertThat(schema.getChild("arrD").getChild(1).getTypeCode(), is(TypeCode.STRING));
-        assertThat(schema.getChild("mapA").getTypeCode(), is(TypeCode.MAP));
-        assertThat(schema.getChild("mapB").getTypeCode(), is(TypeCode.DICT));
-        assertThat(schema.getChild("mapB").getChild("foo").getTypeCode(), is(TypeCode.DOUBLE));
-        assertThat(schema.getChild("mapB").getChild("bar").getTypeCode(), is(TypeCode.STRING));
+        assertThat(schema.getChild("arrA").getTypeCode()).isEqualTo(TypeCode.LONG_ARRAY);
+        assertThat(schema.getChild("arrB").getTypeCode()).isEqualTo(TypeCode.STRING_ARRAY);
+        assertThat(schema.getChild("arrC").getTypeCode()).isEqualTo(TypeCode.LIST);
+        assertThat(schema.getChild("arrD").getTypeCode()).isEqualTo(TypeCode.TUPLE);
+        assertThat(schema.getChild("arrD").getChild(0).getTypeCode()).isEqualTo(TypeCode.LONG);
+        assertThat(schema.getChild("arrD").getChild(1).getTypeCode()).isEqualTo(TypeCode.STRING);
+        assertThat(schema.getChild("mapA").getTypeCode()).isEqualTo(TypeCode.MAP);
+        assertThat(schema.getChild("mapB").getTypeCode()).isEqualTo(TypeCode.DICT);
+        assertThat(schema.getChild("mapB").getChild("foo").getTypeCode()).isEqualTo(TypeCode.DOUBLE);
+        assertThat(schema.getChild("mapB").getChild("bar").getTypeCode()).isEqualTo(TypeCode.STRING);
     }
 }

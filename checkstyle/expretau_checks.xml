@@ -196,7 +196,7 @@
         </module>
         <module name="MissingJavadocMethod">
             <property name="scope" value="public"/>
-            <property name="allowedAnnotations" value="Override, Test, Parameterized"/>
+            <property name="allowedAnnotations" value="Override, Test, ParameterizedTest"/>
             <property name="ignoreMethodNamesRegex" value="main"/>
         </module>
         <module name="MethodName">

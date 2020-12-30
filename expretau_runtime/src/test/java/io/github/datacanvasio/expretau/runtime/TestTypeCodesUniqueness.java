@@ -16,7 +16,8 @@
 
 package io.github.datacanvasio.expretau.runtime;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -24,8 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class TestTypeCodesUniqueness {
     @Test
     public void testCodeUniqueness() {

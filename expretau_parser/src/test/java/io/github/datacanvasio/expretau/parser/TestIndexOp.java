@@ -18,24 +18,22 @@ package io.github.datacanvasio.expretau.parser;
 
 import io.github.datacanvasio.expretau.Expr;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
-import lombok.RequiredArgsConstructor;
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-@RunWith(Parameterized.class)
-@RequiredArgsConstructor
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestIndexOp {
-    @ClassRule
-    public static ContextResource res = new ContextResource(
+    @RegisterExtension
+    private static ContextResource res = new ContextResource(
         "/composite_vars.yml",
         "{"
             + "arrA: [1, 2, 3],"
@@ -55,32 +53,28 @@ public class TestIndexOp {
             + "}"
     );
 
-    private final String exprString;
-    private final Object value0;
-    private final Object value1;
-
-    @Parameterized.Parameters(name = "{index}: {0} ==> {1}, {2}")
     @Nonnull
-    public static Collection<Object[]> getParameters() {
-        return Arrays.asList(new Object[][]{
-            {"arrA[0]", 1L, 4L},
-            {"arrB[1]", "bar", "b"},
-            {"arrA[0] + arrA[1]", 3L, 9L},
-            {"arrB[0] + arrB[1]", "foobar", "ab"},
-            {"arrC[0]", 1L, "def"},
-            {"arrD[0]", 10L, 20L},
-            {"arrD[1]", "tuple", "TUPLE"},
-            {"mapA.a", 1L, "def"},
-            {"mapB.foo", 2.5, 3.4},
-            {"mapB['bar']", "TOM", "JERRY"},
-        });
+    private static Stream<Arguments> getParameters() {
+        return Stream.of(
+            arguments("arrA[0]", 1L, 4L),
+            arguments("arrB[1]", "bar", "b"),
+            arguments("arrA[0] + arrA[1]", 3L, 9L),
+            arguments("arrB[0] + arrB[1]", "foobar", "ab"),
+            arguments("arrC[0]", 1L, "def"),
+            arguments("arrD[0]", 10L, 20L),
+            arguments("arrD[1]", "tuple", "TUPLE"),
+            arguments("mapA.a", 1L, "def"),
+            arguments("mapB.foo", 2.5, 3.4),
+            arguments("mapB['bar']", "TOM", "JERRY")
+        );
     }
 
-    @Test
-    public void test() throws Exception {
+    @ParameterizedTest
+    @MethodSource("getParameters")
+    public void test(String exprString, Object value0, Object value1) throws Exception {
         Expr expr = ExpretauCompiler.INS.parse(exprString);
         RtExpr rtExpr = expr.compileIn(res.getCtx());
-        assertThat(rtExpr.eval(res.getEtx(0)), is(value0));
-        assertThat(rtExpr.eval(res.getEtx(1)), is(value1));
+        assertThat(rtExpr.eval(res.getEtx(0))).isEqualTo(value0);
+        assertThat(rtExpr.eval(res.getEtx(1))).isEqualTo(value1);
     }
 }
