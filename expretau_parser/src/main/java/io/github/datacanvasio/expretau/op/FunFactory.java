@@ -29,11 +29,13 @@ import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinEvaluat
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinhEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanhEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.time.TimeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.op.RtOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtReplaceOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToLowerCaseOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToUpperCaseOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtTrimOp;
+import io.github.datacanvasio.expretau.runtime.op.time.RtTimestampOp;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.HashMap;
@@ -67,6 +69,9 @@ public final class FunFactory {
         registerUdf("toUpperCase", RtToUpperCaseOp::new);
         registerUdf("trim", RtTrimOp::new);
         registerUdf("replace", RtReplaceOp::new);
+        // Time
+        funSuppliers.put("time", () -> new OpWithEvaluator(TimeEvaluatorFactory.INS));
+        registerUdf("timestamp", RtTimestampOp::new);
     }
 
     /**

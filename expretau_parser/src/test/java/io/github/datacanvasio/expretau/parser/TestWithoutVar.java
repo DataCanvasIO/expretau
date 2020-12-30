@@ -24,6 +24,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 
@@ -36,7 +39,7 @@ public class TestWithoutVar {
     private static final double TAU = Math.PI * 2;
 
     @Nonnull
-    private static Stream<Arguments> getParameters() {
+    private static Stream<Arguments> getParameters() throws ParseException {
         return Stream.of(
             // value
             arguments("true", true),
@@ -129,7 +132,27 @@ public class TestWithoutVar {
             arguments("toLowerCase('HeLlO')", "hello"),
             arguments("toUpperCase('HeLlO')", "HELLO"),
             arguments("trim(' HeLlO \\n\\t')", "HeLlO"),
-            arguments("replace('I love $name', '$name', 'Lucia')", "I love Lucia")
+            arguments("replace('I love $name', '$name', 'Lucia')", "I love Lucia"),
+            // time
+            arguments("time(1609300025000)", new Date(1609300025000L)),
+            arguments(
+                "time('2020-02-20 20:20:20.222')",
+                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                    .parse("2020-02-20 20:20:20.222")
+            ),
+            arguments(
+                "time('1999-09-19', 'yyyy-MM-dd')",
+                new SimpleDateFormat("yyyy-MM-dd")
+                    .parse("1999-09-19")
+            ),
+            arguments("time(1609300025000) = time(1609300025000)", true),
+            arguments("time(1609300025000) < time(1609300025001)", true),
+            arguments("time(1609300025000) <= time(1609300025001)", true),
+            arguments("time(1609300025000) >= time(1609300025001)", false),
+            arguments("time(1609300025000) > time(1609300025001)", false),
+            arguments("time(1609300025000) != time(1609300025001)", true),
+            arguments("timestamp(time(1609300025003))", 1609300025003L),
+            arguments("timestamp(time('1970-01-01+0000', 'yyyy-MM-ddZ'))", 0L)
         );
     }
 

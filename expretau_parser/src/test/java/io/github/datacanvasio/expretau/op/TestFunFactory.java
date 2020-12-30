@@ -22,6 +22,7 @@ import io.github.datacanvasio.expretau.parser.ExpretauCompiler;
 import io.github.datacanvasio.expretau.runtime.RtExpr;
 import io.github.datacanvasio.expretau.runtime.TypeCode;
 import io.github.datacanvasio.expretau.runtime.op.RtFun;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -33,12 +34,14 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class TestFunFactory {
     @Test
-    public void testCallUnregistered() throws Exception {
+    @Order(0)
+    public void testCallUnregistered() {
         assertThrows(ExpretauParseException.class,
             () -> ExpretauCompiler.INS.parse("hello('world')"));
     }
 
     @Test
+    @Order(1)
     public void testRegisterUdf() throws Exception {
         FunFactory.INS.registerUdf("hello", HelloOp::new);
         Expr expr = ExpretauCompiler.INS.parse("hello('world')");

@@ -23,6 +23,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -60,7 +61,8 @@ public class TestTypeCodesEquality {
             arguments(Map.class, TypeCode.MAP),
             arguments(HashMap.class, TypeCode.MAP),
             arguments(TreeMap.class, TypeCode.MAP),
-            arguments(LinkedHashMap.class, TypeCode.MAP)
+            arguments(LinkedHashMap.class, TypeCode.MAP),
+            arguments(Date.class, TypeCode.TIME)
         );
     }
 

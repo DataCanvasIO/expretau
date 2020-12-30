@@ -23,6 +23,7 @@ import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorKey;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.UniversalEvaluator;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.annotation.Nonnull;
 
 @Evaluators(
@@ -60,6 +61,10 @@ final class RelationalEvaluators {
         return first.equals(second);
     }
 
+    static boolean eq(@Nonnull Date first, Date second) {
+        return first.equals(second);
+    }
+
     static boolean lt(int first, int second) {
         return first < second;
     }
@@ -80,6 +85,10 @@ final class RelationalEvaluators {
         return first.compareTo(second) < 0;
     }
 
+    static boolean lt(@Nonnull Date first, Date second) {
+        return first.before(second);
+    }
+
     static boolean le(int first, int second) {
         return first <= second;
     }
@@ -90,6 +99,10 @@ final class RelationalEvaluators {
 
     static boolean le(double first, double second) {
         return first <= second;
+    }
+
+    static boolean le(@Nonnull Date first, Date second) {
+        return !first.after(second);
     }
 
     static boolean le(@Nonnull BigDecimal first, BigDecimal second) {
@@ -120,6 +133,10 @@ final class RelationalEvaluators {
         return first.compareTo(second) > 0;
     }
 
+    static boolean gt(@Nonnull Date first, Date second) {
+        return first.after(second);
+    }
+
     static boolean ge(int first, int second) {
         return first >= second;
     }
@@ -138,6 +155,10 @@ final class RelationalEvaluators {
 
     static boolean ge(@Nonnull String first, String second) {
         return first.compareTo(second) >= 0;
+    }
+
+    static boolean ge(@Nonnull Date first, Date second) {
+        return !first.before(second);
     }
 
     static boolean ne(boolean first, boolean second) {
@@ -162,5 +183,9 @@ final class RelationalEvaluators {
 
     static boolean ne(@Nonnull String first, String second) {
         return first.compareTo(second) != 0;
+    }
+
+    static boolean ne(@Nonnull Date first, Date second) {
+        return !first.equals(second);
     }
 }

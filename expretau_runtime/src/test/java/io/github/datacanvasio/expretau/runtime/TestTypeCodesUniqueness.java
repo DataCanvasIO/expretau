@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class TestTypeCodesUniqueness {
             Object[].class,
             List.class,
             Map.class,
+            Date.class,
         };
         Set<Integer> codeSet = new HashSet<>();
         for (Class<?> clazz : classes) {

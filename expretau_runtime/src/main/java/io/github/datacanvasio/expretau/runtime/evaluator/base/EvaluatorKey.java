@@ -23,13 +23,13 @@ import java.util.Arrays;
 import javax.annotation.Nonnull;
 
 public final class EvaluatorKey implements Serializable {
-    public static final EvaluatorKey UNIVERSAL = new EvaluatorKey(new int[0]);
+    public static final EvaluatorKey UNIVERSAL = new EvaluatorKey(null);
     private static final long serialVersionUID = 3094073337324796122L;
 
     @Getter
     private final int[] paraTypeCodes;
 
-    private EvaluatorKey(@Nonnull int[] paraTypeCodes) {
+    private EvaluatorKey(int[] paraTypeCodes) {
         this.paraTypeCodes = paraTypeCodes;
     }
 

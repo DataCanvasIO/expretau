@@ -33,7 +33,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestIndexOp {
     @RegisterExtension
-    private static ContextResource res = new ContextResource(
+    static final ContextResource res = new ContextResource(
         "/composite_vars.yml",
         "{"
             + "arrA: [1, 2, 3],"

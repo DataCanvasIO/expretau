@@ -33,7 +33,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class TestWithVar {
     @RegisterExtension
-    private static ContextResource res = new ContextResource(
+    static final ContextResource res = new ContextResource(
         "/simple_vars.yml",
         "{a: 2, b: 3.0, c: true, d: foo}",
         "{a: 3, b: 4.0, c: false, d: bar}"

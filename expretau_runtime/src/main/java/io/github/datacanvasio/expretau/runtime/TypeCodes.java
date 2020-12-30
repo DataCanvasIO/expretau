@@ -40,6 +40,7 @@ import javax.annotation.Nonnull;
     @GenerateTypeCodes.TypeCode(name = "OBJECT_ARRAY", type = "java.lang.Object[]"),
     @GenerateTypeCodes.TypeCode(name = "LIST", type = "java.util.List"),
     @GenerateTypeCodes.TypeCode(name = "MAP", type = "java.util.Map"),
+    @GenerateTypeCodes.TypeCode(name = "TIME", type = "java.util.Date"),
     // pseudo types
     @GenerateTypeCodes.TypeCode(name = "TUPLE", type = "tuple"),
     @GenerateTypeCodes.TypeCode(name = "DICT", type = "dict"),
