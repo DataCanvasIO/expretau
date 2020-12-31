@@ -310,7 +310,9 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         @SuppressWarnings("SameParameterValue") Class<?> annotationClass
     ) {
         for (AnnotationMirror am : processingEnv.getElementUtils().getAllAnnotationMirrors(element)) {
-            if (am.getAnnotationType().toString().equals(annotationClass.getName())) {
+            if (am.getAnnotationType().toString().equals(
+                annotationClass.getName().replace('$', '.')
+            )) {
                 return am;
             }
         }
@@ -354,18 +356,18 @@ public class EvaluatorsProcessor extends AbstractProcessor {
     private void generateEvaluatorClassFile(
         @Nonnull EvaluatorsInfo info,
         String className,
+        @Nonnull TypeElement base,
         @Nonnull MethodSpec evalSpec,
         MethodSpec typeCodeSpec
     ) {
-        TypeElement evaluatorBase = info.getEvaluatorBase();
         TypeSpec.Builder builder = TypeSpec.classBuilder(className)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .addField(serialVersionUid())
             .addMethod(evalSpec);
-        if (evaluatorBase.getKind().isInterface()) {
-            builder.addSuperinterface(evaluatorBase.asType());
+        if (base.getKind().isInterface()) {
+            builder.addSuperinterface(base.asType());
         } else {
-            builder.superclass(evaluatorBase.asType());
+            builder.superclass(base.asType());
         }
         if (typeCodeSpec != null) {
             builder.addMethod(typeCodeSpec);
@@ -396,6 +398,10 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             return;
         }
         TypeElement evaluatorBase = info.getEvaluatorBase();
+        AnnotationMirror annotationMirror = getAnnotationMirror(element, Evaluators.Base.class);
+        if (annotationMirror != null) {
+            evaluatorBase = getTypeElementFromAnnotationValue(annotationMirror, "value");
+        }
         ExecutableElement evalMethod = getOverridingMethod(
             evaluatorBase,
             EVALUATOR_EVAL_METHOD,
@@ -411,7 +417,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             .addCode(codeEvalParas(info, methodName, paraName, paras, newParas))
             .build();
         ExecutableElement typeCodeMethod = getOverridingMethod(
-            info.getEvaluatorBase(),
+            evaluatorBase,
             EVALUATOR_TYPE_CODE_METHOD,
             null
         );
@@ -422,7 +428,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
                 .build();
         }
         String className = getClassName(evaluatorName, newParas);
-        generateEvaluatorClassFile(info, className, evalSpec, typeCodeSpec);
+        generateEvaluatorClassFile(info, className, evaluatorBase, evalSpec, typeCodeSpec);
         // must copy newParas, it is volatile.
         evaluatorMap.put(
             evaluatorKey,

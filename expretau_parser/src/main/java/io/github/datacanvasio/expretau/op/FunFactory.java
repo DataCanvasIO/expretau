@@ -31,12 +31,12 @@ import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinhEvalua
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanhEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.string.SubstringEvaluatorFactory;
-import io.github.datacanvasio.expretau.runtime.evaluator.time.TimeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.type.DecimalTypeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.type.DoubleTypeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.type.IntTypeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.type.LongTypeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.type.StringTypeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.TimeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.op.RtOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtReplaceOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToLowerCaseOp;

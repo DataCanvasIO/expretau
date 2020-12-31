@@ -17,9 +17,14 @@
 package io.github.datacanvasio.expretau.runtime.evaluator.index;
 
 import io.github.datacanvasio.expretau.annotations.Evaluators;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.BooleanEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.Evaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorKey;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.IntegerEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.LongEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.ObjectEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.StringEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.UniversalEvaluator;
 
 import java.util.List;
@@ -37,30 +42,37 @@ final class IndexEvaluators {
     private IndexEvaluators() {
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static Integer index(@Nonnull Integer[] array, int index) {
         return array[index];
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static Long index(@Nonnull Long[] array, int index) {
         return array[index];
     }
 
+    @Evaluators.Base(BooleanEvaluator.class)
     static Boolean index(@Nonnull Boolean[] array, int index) {
         return array[index];
     }
 
+    @Evaluators.Base(StringEvaluator.class)
     static String index(@Nonnull String[] array, int index) {
         return array[index];
     }
 
+    @Evaluators.Base(ObjectEvaluator.class)
     static Object index(@Nonnull Object[] array, int index) {
         return array[index];
     }
 
+    @Evaluators.Base(ObjectEvaluator.class)
     static Object index(@Nonnull List<?> array, int index) {
         return array.get(index);
     }
 
+    @Evaluators.Base(ObjectEvaluator.class)
     static Object index(@Nonnull Map<String, ?> map, String index) {
         return map.get(index);
     }

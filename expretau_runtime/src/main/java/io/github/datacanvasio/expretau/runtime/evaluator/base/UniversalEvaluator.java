@@ -16,13 +16,12 @@
 
 package io.github.datacanvasio.expretau.runtime.evaluator.base;
 
-import io.github.datacanvasio.expretau.runtime.TypeCode;
 import io.github.datacanvasio.expretau.runtime.TypeCodes;
 import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class UniversalEvaluator implements Evaluator {
+public class UniversalEvaluator extends ObjectEvaluator {
     private static final long serialVersionUID = 8115905605402311713L;
     private final EvaluatorFactory factory;
 
@@ -34,10 +33,5 @@ public class UniversalEvaluator implements Evaluator {
             return evaluator.eval(paras);
         }
         throw new FailGetEvaluator(factory, typeCodes);
-    }
-
-    @Override
-    public int typeCode() {
-        return TypeCode.OBJECT;
     }
 }

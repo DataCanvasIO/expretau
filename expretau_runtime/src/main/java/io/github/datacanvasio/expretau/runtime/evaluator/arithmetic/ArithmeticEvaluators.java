@@ -17,9 +17,13 @@
 package io.github.datacanvasio.expretau.runtime.evaluator.arithmetic;
 
 import io.github.datacanvasio.expretau.annotations.Evaluators;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.DecimalEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.DoubleEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.Evaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorKey;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.IntegerEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.LongEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.UniversalEvaluator;
 
 import java.math.BigDecimal;
@@ -41,35 +45,43 @@ final class ArithmeticEvaluators {
     // Unary operators
     //
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int pos(int value) {
         return value;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long pos(long value) {
         return value;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double pos(double value) {
         return value;
     }
 
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal pos(BigDecimal value) {
         return value;
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int neg(int value) {
         return -value;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long neg(long value) {
         return -value;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double neg(double value) {
         return -value;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal neg(@Nonnull BigDecimal value) {
         return value.negate();
     }
@@ -78,19 +90,23 @@ final class ArithmeticEvaluators {
     // Binary operators
     //
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int add(int value0, int value1) {
         return value0 + value1;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long add(long value0, long value1) {
         return value0 + value1;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double add(double value0, double value1) {
         return value0 + value1;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal add(@Nonnull BigDecimal value0, BigDecimal value1) {
         return value0.add(value1);
     }
@@ -101,65 +117,80 @@ final class ArithmeticEvaluators {
         return s0 + s1;
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int sub(int value0, int value1) {
         return value0 - value1;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long sub(long value0, long value1) {
         return value0 - value1;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double sub(double value0, double value1) {
         return value0 - value1;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal sub(@Nonnull BigDecimal value0, BigDecimal value1) {
         return value0.subtract(value1);
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int mul(int value0, int value1) {
         return value0 * value1;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long mul(long value0, long value1) {
         return value0 * value1;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double mul(double value0, double value1) {
         return value0 * value1;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal mul(@Nonnull BigDecimal value0, BigDecimal value1) {
         return value0.multiply(value1);
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int div(int value0, int value1) {
         return value0 / value1;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long div(long value0, long value1) {
         return value0 / value1;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double div(double value0, double value1) {
         return value0 / value1;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal div(@Nonnull BigDecimal value0, BigDecimal value1) {
         return value0.divide(value1, RoundingMode.HALF_EVEN);
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int abs(int num) {
         return Math.abs(num);
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long abs(long num) {
         return Math.abs(num);
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double abs(double num) {
         return Math.abs(num);
     }

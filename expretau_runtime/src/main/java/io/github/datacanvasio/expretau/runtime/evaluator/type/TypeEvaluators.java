@@ -17,12 +17,21 @@
 package io.github.datacanvasio.expretau.runtime.evaluator.type;
 
 import io.github.datacanvasio.expretau.annotations.Evaluators;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.DecimalEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.DoubleEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.Evaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorKey;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.IntegerEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.LongEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.StringEvaluator;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.TimeEvaluator;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.UniversalEvaluator;
+import io.github.datacanvasio.expretau.runtime.exception.FailParseTime;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.annotation.Nonnull;
 
@@ -37,96 +46,160 @@ final class TypeEvaluators {
     private TypeEvaluators() {
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int intType(int value) {
         return value;
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int intType(long value) {
         return (int) value;
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int intType(double value) {
         return (int) value;
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int intType(@Nonnull BigDecimal value) {
         return value.intValue();
     }
 
+    @Evaluators.Base(IntegerEvaluator.class)
     static int intType(String value) {
         return Integer.parseInt(value);
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(int value) {
         return value;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(long value) {
         return value;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(double value) {
         return (long) value;
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(@Nonnull BigDecimal value) {
         return value.longValue();
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(@Nonnull String value) {
         return Long.parseLong(value);
     }
 
+    @Evaluators.Base(LongEvaluator.class)
     static long longType(@Nonnull Date value) {
         return value.getTime();
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double doubleType(int value) {
         return value;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double doubleType(long value) {
         return value;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double doubleType(double value) {
         return value;
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double doubleType(@Nonnull BigDecimal value) {
         return value.doubleValue();
     }
 
+    @Evaluators.Base(DoubleEvaluator.class)
     static double doubleType(@Nonnull String value) {
         return Double.parseDouble(value);
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal decimalType(int value) {
         return BigDecimal.valueOf(value);
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal decimalType(long value) {
         return BigDecimal.valueOf(value);
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal decimalType(double value) {
         return BigDecimal.valueOf(value);
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal decimalType(BigDecimal value) {
         return value;
     }
 
     @Nonnull
+    @Evaluators.Base(DecimalEvaluator.class)
     static BigDecimal decimalType(String value) {
         return new BigDecimal(value);
     }
 
+    @Evaluators.Base(StringEvaluator.class)
     static String stringType(@Nonnull Object value) {
         return value.toString();
+    }
+
+    @Nonnull
+    @Evaluators.Base(StringEvaluator.class)
+    static String stringType(@Nonnull Date value) {
+        return stringType(value, "yyyy-MM-dd HH:mm:ss.SSS");
+    }
+
+    @Nonnull
+    @Evaluators.Base(StringEvaluator.class)
+    static String stringType(@Nonnull Date value, String fmt) {
+        SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+        return sdf.format(value);
+    }
+
+    @Nonnull
+    @Evaluators.Base(TimeEvaluator.class)
+    static Date time() {
+        return new Date();
+    }
+
+    @Nonnull
+    @Evaluators.Base(TimeEvaluator.class)
+    static Date time(long timestamp) {
+        return new Date(timestamp);
+    }
+
+    @Nonnull
+    @Evaluators.Base(TimeEvaluator.class)
+    static Date time(String str) {
+        return time(str, "yyyy-MM-dd HH:mm:ss.SSS");
+    }
+
+    @Nonnull
+    @Evaluators.Base(TimeEvaluator.class)
+    static Date time(String str, String fmt) {
+        SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+        try {
+            return sdf.parse(str);
+        } catch (ParseException e) {
+            throw new FailParseTime(str, fmt);
+        }
     }
 }

@@ -58,4 +58,8 @@ public @interface Evaluators {
      * @return an array of class
      */
     Class<?>[] induceSequence();
+
+    @interface Base {
+        Class<?> value();
+    }
 }
