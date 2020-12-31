@@ -25,7 +25,7 @@
 
     <groupId>io.github.datacanvasio.expretau</groupId>
     <artifactId>expretau-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -187,17 +187,17 @@
             <dependency>
                 <groupId>io.github.datacanvasio.expretau</groupId>
                 <artifactId>expretau-annotations</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.datacanvasio.expretau</groupId>
                 <artifactId>expretau-runtime</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.datacanvasio.expretau</groupId>
                 <artifactId>expretau-parser</artifactId>
-                <version>1.0.1-SNAPSHOT</version>
+                <version>1.1.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
