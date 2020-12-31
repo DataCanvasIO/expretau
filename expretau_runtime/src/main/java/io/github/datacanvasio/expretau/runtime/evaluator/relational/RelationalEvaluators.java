@@ -65,6 +65,10 @@ final class RelationalEvaluators {
         return first.equals(second);
     }
 
+    static boolean eq1(@Nonnull Object first, Object second) {
+        return first.equals(second);
+    }
+
     static boolean lt(int first, int second) {
         return first < second;
     }

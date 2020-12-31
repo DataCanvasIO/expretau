@@ -36,6 +36,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.annotation.Nonnull;
@@ -370,8 +372,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         }
         String packageName = info.getPackageName();
         ProcessorUtils.saveSourceFile(processingEnv, packageName, builder.build());
-        // Not a warning, only want to show it
-        processingEnv.getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING,
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,
             "Evaluator \"" + className + "\" generated in package \"" + packageName + "\".");
     }
 
@@ -382,8 +383,14 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         @Nonnull final EvaluatorsInfo info
     ) {
         String methodName = element.getSimpleName().toString();
+        Pattern pattern = Pattern.compile("^([a-zA-Z]+)\\d*$");
+        Matcher matcher = pattern.matcher(methodName);
+        if (!matcher.find()) {
+            throw new IllegalArgumentException("Not a valid method name: \"" + methodName + "\".");
+        }
+        String evaluatorName = matcher.group(1);
         Map<String, EvaluatorInfo> evaluatorMap = info.getEvaluatorMap()
-            .computeIfAbsent(methodName, k -> new HashMap<>());
+            .computeIfAbsent(evaluatorName, k -> new HashMap<>());
         String evaluatorKey = getEvaluatorKey(newParas);
         if (evaluatorMap.containsKey(evaluatorKey)) {
             return;
@@ -414,7 +421,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
                 .addStatement("return $L", ProcessorUtils.typeCode(returnType))
                 .build();
         }
-        String className = getClassName(methodName, newParas);
+        String className = getClassName(evaluatorName, newParas);
         generateEvaluatorClassFile(info, className, evalSpec, typeCodeSpec);
         // must copy newParas, it is volatile.
         evaluatorMap.put(

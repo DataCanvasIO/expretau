@@ -42,7 +42,6 @@ import io.github.datacanvasio.expretau.runtime.op.string.RtReplaceOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToLowerCaseOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToUpperCaseOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtTrimOp;
-import io.github.datacanvasio.expretau.runtime.op.time.RtTimestampOp;
 import org.antlr.v4.runtime.misc.ParseCancellationException;
 
 import java.util.HashMap;
@@ -77,15 +76,13 @@ public final class FunFactory {
         registerEvaluator("double", DoubleTypeEvaluatorFactory.INS);
         registerEvaluator("decimal", DecimalTypeEvaluatorFactory.INS);
         registerEvaluator("string", StringTypeEvaluatorFactory.INS);
+        registerEvaluator("time", TimeEvaluatorFactory.INS);
         // String
         registerUdf("toLowerCase", RtToLowerCaseOp::new);
         registerUdf("toUpperCase", RtToUpperCaseOp::new);
         registerUdf("trim", RtTrimOp::new);
         registerUdf("replace", RtReplaceOp::new);
         registerEvaluator("substring", SubstringEvaluatorFactory.INS);
-        // Time
-        registerEvaluator("time", TimeEvaluatorFactory.INS);
-        registerUdf("timestamp", RtTimestampOp::new);
     }
 
     private void registerEvaluator(

@@ -150,6 +150,7 @@ like JSONPath.
 | Boolean      | boolean          | java.lang.Boolean      | `true` `false`        |
 | String       | string           | java.lang.String       | `"hello"` `'world'`   |
 | Decimal      |                  | java.math.BigDecimal   |
+| Time         |                  | java.util.Date         |
 | IntegerArray |                  | java.lang.Integer[]    |
 | LongArray    | array            | java.lang.Long[]       |
 | DoubleArray  | array            | java.lang.Double[]     |
@@ -192,6 +193,52 @@ pre-defined constants, variables or intermediate results.
 | E    | 2.7182818284590452354   |
 
 There is not "3.14159265" but "TAU". :smile:
+
+## Functions
+
+### Mathematical
+
+See [Math (Java Platform SE 8)](https://docs.oracle.com/javase/8/docs/api/java/lang/Math.html).
+
+| Function  | Java function based on | Description |
+| :-------- | :--------------------- | :---------- |
+| `abs(x)`  | `java.lang.Math.abs`   |             |
+| `sin(x)`  | `java.lang.Math.sin`   |             |
+| `cos(x)`  | `java.lang.Math.cos`   |             |
+| `tan(x)`  | `java.lang.Math.tan`   |             |
+| `asin(x)` | `java.lang.Math.asin`  |             |
+| `acos(x)` | `java.lang.Math.acos`  |             |
+| `atan(x)` | `java.lang.Math.atan`  |             |
+| `cosh(x)` | `java.lang.Math.cosh`  |             |
+| `sinh(x)` | `java.lang.Math.sinh`  |             |
+| `tanh(x)` | `java.lang.Math.tanh`  |             |
+| `log(x)`  | `java.lang.Math.log`   |             |
+| `exp(x)`  | `java.lang.Math.exp`   |             |
+
+### Type conversion
+
+| Function       | Java function based on | Description            |
+| :------------- | :--------------------- | :--------------------- |
+| `int(x)`       |                        | Convert `x` to Integer |
+| `long(x)`      |                        | Convert `x` to Long    |
+| `double(x)`    |                        | Convert `x` to Double  |
+| `decimal(x)`   |                        | Convert `x` to Decimal |
+| `string(x)`    |                        | Convert `x` to String  |
+| `time(x)`      |                        | Convert `x` to Time    |
+| `time(x, fmt)` |                        | Convert `x` to Time    |
+
+### String
+
+See [String (Java Platform SE 8)](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html).
+
+| Function             | Java function based on | Description |
+| :------------------- | :--------------------- | :---------- |
+| `toLowerCase(x)`     | `String::toLowerCase`  |             |
+| `toUpperCase(x)`     | `String::toUpperCase`  |             |
+| `trim(x)`            | `String::trim`         |             |
+| `replace(x, a, b)`   | `String::replace`      |             |
+| `substring(x, s)`    | `String::substring`    |             |
+| `substring(x, s, e)` | `String::substring`    |             |
 
 ## User defined functions
 

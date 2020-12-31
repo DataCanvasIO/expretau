@@ -23,6 +23,7 @@ import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorKey;
 import io.github.datacanvasio.expretau.runtime.evaluator.base.UniversalEvaluator;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import javax.annotation.Nonnull;
 
 @Evaluators(
@@ -74,6 +75,10 @@ final class TypeEvaluators {
 
     static long longType(@Nonnull String value) {
         return Long.parseLong(value);
+    }
+
+    static long longType(@Nonnull Date value) {
+        return value.getTime();
     }
 
     static double doubleType(int value) {

@@ -152,8 +152,8 @@ public class TestWithoutVar {
             arguments("time(1609300025000) >= time(1609300025001)", false),
             arguments("time(1609300025000) > time(1609300025001)", false),
             arguments("time(1609300025000) != time(1609300025001)", true),
-            arguments("timestamp(time(1609300025003))", 1609300025003L),
-            arguments("timestamp(time('1970-01-01+0000', 'yyyy-MM-ddZ'))", 0L),
+            arguments("long(time(1609300025003))", 1609300025003L),
+            arguments("long(time('1970-01-01+0000', 'yyyy-MM-ddZ'))", 0L),
             // type conversion
             arguments("int(5)", 5),
             arguments("int(long(5))", 5),

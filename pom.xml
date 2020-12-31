@@ -94,6 +94,7 @@
 
         <!-- plugins -->
         <maven-checkstyle.version>3.1.1</maven-checkstyle.version>
+        <maven-compiler.version>3.8.1</maven-compiler.version>
         <maven-surefire.version>3.0.0-M5</maven-surefire.version>
         <maven-jar.version>3.2.0</maven-jar.version>
         <maven-shade.version>3.2.4</maven-shade.version>
@@ -227,6 +228,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire.version}</version>
                 </plugin>
@@ -292,6 +298,13 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <showWarnings>true</showWarnings>
+                </configuration>
             </plugin>
         </plugins>
     </build>
