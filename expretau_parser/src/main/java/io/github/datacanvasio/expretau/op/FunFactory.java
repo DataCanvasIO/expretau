@@ -18,6 +18,7 @@ package io.github.datacanvasio.expretau.op;
 
 import io.github.datacanvasio.expretau.runtime.RtExpr;
 import io.github.datacanvasio.expretau.runtime.evaluator.arithmetic.AbsEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.base.EvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.AcosEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.AsinEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.AtanEvaluatorFactory;
@@ -29,7 +30,13 @@ import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinEvaluat
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.SinhEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.mathematical.TanhEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.string.SubstringEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.evaluator.time.TimeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.DecimalTypeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.DoubleTypeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.IntTypeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.LongTypeEvaluatorFactory;
+import io.github.datacanvasio.expretau.runtime.evaluator.type.StringTypeEvaluatorFactory;
 import io.github.datacanvasio.expretau.runtime.op.RtOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtReplaceOp;
 import io.github.datacanvasio.expretau.runtime.op.string.RtToLowerCaseOp;
@@ -52,37 +59,51 @@ public final class FunFactory {
     private FunFactory() {
         funSuppliers = new HashMap<>(64);
         // Mathematical
-        funSuppliers.put("abs", () -> new OpWithEvaluator(AbsEvaluatorFactory.INS));
-        funSuppliers.put("sin", () -> new OpWithEvaluator(SinEvaluatorFactory.INS));
-        funSuppliers.put("cos", () -> new OpWithEvaluator(CosEvaluatorFactory.INS));
-        funSuppliers.put("tan", () -> new OpWithEvaluator(TanEvaluatorFactory.INS));
-        funSuppliers.put("asin", () -> new OpWithEvaluator(AsinEvaluatorFactory.INS));
-        funSuppliers.put("acos", () -> new OpWithEvaluator(AcosEvaluatorFactory.INS));
-        funSuppliers.put("atan", () -> new OpWithEvaluator(AtanEvaluatorFactory.INS));
-        funSuppliers.put("cosh", () -> new OpWithEvaluator(CoshEvaluatorFactory.INS));
-        funSuppliers.put("sinh", () -> new OpWithEvaluator(SinhEvaluatorFactory.INS));
-        funSuppliers.put("tanh", () -> new OpWithEvaluator(TanhEvaluatorFactory.INS));
-        funSuppliers.put("log", () -> new OpWithEvaluator(LogEvaluatorFactory.INS));
-        funSuppliers.put("exp", () -> new OpWithEvaluator(ExpEvaluatorFactory.INS));
+        registerEvaluator("abs", AbsEvaluatorFactory.INS);
+        registerEvaluator("sin", SinEvaluatorFactory.INS);
+        registerEvaluator("cos", CosEvaluatorFactory.INS);
+        registerEvaluator("tan", TanEvaluatorFactory.INS);
+        registerEvaluator("asin", AsinEvaluatorFactory.INS);
+        registerEvaluator("acos", AcosEvaluatorFactory.INS);
+        registerEvaluator("atan", AtanEvaluatorFactory.INS);
+        registerEvaluator("cosh", CoshEvaluatorFactory.INS);
+        registerEvaluator("sinh", SinhEvaluatorFactory.INS);
+        registerEvaluator("tanh", TanhEvaluatorFactory.INS);
+        registerEvaluator("log", LogEvaluatorFactory.INS);
+        registerEvaluator("exp", ExpEvaluatorFactory.INS);
+        // Type conversion
+        registerEvaluator("int", IntTypeEvaluatorFactory.INS);
+        registerEvaluator("long", LongTypeEvaluatorFactory.INS);
+        registerEvaluator("double", DoubleTypeEvaluatorFactory.INS);
+        registerEvaluator("decimal", DecimalTypeEvaluatorFactory.INS);
+        registerEvaluator("string", StringTypeEvaluatorFactory.INS);
         // String
         registerUdf("toLowerCase", RtToLowerCaseOp::new);
         registerUdf("toUpperCase", RtToUpperCaseOp::new);
         registerUdf("trim", RtTrimOp::new);
         registerUdf("replace", RtReplaceOp::new);
+        registerEvaluator("substring", SubstringEvaluatorFactory.INS);
         // Time
-        funSuppliers.put("time", () -> new OpWithEvaluator(TimeEvaluatorFactory.INS));
+        registerEvaluator("time", TimeEvaluatorFactory.INS);
         registerUdf("timestamp", RtTimestampOp::new);
     }
 
+    private void registerEvaluator(
+        String funName,
+        final EvaluatorFactory factory
+    ) {
+        funSuppliers.put(funName, () -> new OpWithEvaluator(factory));
+    }
+
     /**
-     * Register a user defined funtion.
+     * Register a user defined function.
      *
      * @param funName     the name of the function
      * @param funSupplier a function to create the runtime function object
      */
     public void registerUdf(
         String funName,
-        Function<RtExpr[], RtOp> funSupplier
+        final Function<RtExpr[], RtOp> funSupplier
     ) {
         funSuppliers.put(funName, () -> new RtOpWrapper(funSupplier));
     }

@@ -2,9 +2,12 @@
 
 ![Build with Maven](https://github.com/DataCanvasIO/expretau/workflows/Build%20with%20Maven/badge.svg)
 
-ExpreTau is a simple expression engine written in Java, of which the runtime codes are split from parsing and compiling codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system, like [Apache Flink](https://flink.apache.org/).
+ExpreTau is a simple expression engine written in Java, of which the runtime codes are split from parsing and compiling
+codes. The classes in runtime are serializable so that they are suitable for runtime of distributed computing system,
+like [Apache Flink](https://flink.apache.org/).
 
-ExpreTau is just "Expression" and "TAU". The idea of "TAU" is coming from [The Tau Manifesto](https://tauday.com/tau-manifesto).
+ExpreTau is just "Expression" and "TAU". The idea of "TAU" is coming
+from [The Tau Manifesto](https://tauday.com/tau-manifesto).
 
 ## Getting Started
 
@@ -48,7 +51,8 @@ Module `expretau_console` can be simply used as a command line calculator, which
 
 Variables can be used in expressions, but a `CompileContext` must be provided to define the types of variables.
 
-A [JSON Schema](http://json-schema.org/) definition can be used as a source of `CompileContext`. For example (in YAML format for simplicity, but you can surely use JSON format)
+A [JSON Schema](http://json-schema.org/) definition can be used as a source of `CompileContext`. For example (in YAML
+format for simplicity, but you can surely use JSON format)
 
 ```yaml
 type: object
@@ -107,11 +111,17 @@ properties:
 additionalProperties: false
 ```
 
-In this context, you can use `a.b` and `a.c` to access the `number` and the `boolean` variables. The syntax looks the same as map index, but they are really separate variables. On the contrary, `a` is not an existing variable. Also, you can use `d[0]` and `d[1]` to access the `integer` and the `string` variables and `d` is not an existing variable.
+In this context, you can use `a.b` and `a.c` to access the `number` and the `boolean` variables. The syntax looks the
+same as map index, but they are really separate variables. On the contrary, `a` is not an existing variable. Also, you
+can use `d[0]` and `d[1]` to access the `integer` and the `string` variables and `d` is not an existing variable.
 
-The `additionalProperties` and `additionalItems` are crucial. If they are set to `true` (which is default in JSON Schema Specification), `a` becomes a variable of `Map` type and `d` of `List` type, which can be accessed by the same syntax, but the operating is a runtime indexing, not a var identifying in compiling time.
+The `additionalProperties` and `additionalItems` are crucial. If they are set to `true` (which is default in JSON Schema
+Specification), `a` becomes a variable of `Map` type and `d` of `List` type, which can be accessed by the same syntax,
+but the operating is a runtime indexing, not a var identifying in compiling time.
 
-The special variable `$` can be used to access the whole context, so `$.a` is the same as `a`. `$` is useful for a context with an array as root. The parser also looks on `a.b` as `a['b']`, so the syntax to access variables is much like JSONPath.
+The special variable `$` can be used to access the whole context, so `$.a` is the same as `a`. `$` is useful for a
+context with an array as root. The parser also looks on `a.b` as `a['b']`, so the syntax to access variables is much
+like JSONPath.
 
 ## Operators
 
@@ -171,7 +181,8 @@ For JSON Schema of type `object`, the final type is determined as in the followi
 | `true`                          | not null              | Map                  |
 | `true`                          | null                  | Object               |
 
-**NOTE**: Some types cannot be written literally in expressions, but they do exist in the engine. They can be got by pre-defined constants, variables or intermediate results.
+**NOTE**: Some types cannot be written literally in expressions, but they do exist in the engine. They can be got by
+pre-defined constants, variables or intermediate results.
 
 ## Constants
 

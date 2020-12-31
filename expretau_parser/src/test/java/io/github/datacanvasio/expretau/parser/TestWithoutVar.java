@@ -24,6 +24,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -152,7 +153,29 @@ public class TestWithoutVar {
             arguments("time(1609300025000) > time(1609300025001)", false),
             arguments("time(1609300025000) != time(1609300025001)", true),
             arguments("timestamp(time(1609300025003))", 1609300025003L),
-            arguments("timestamp(time('1970-01-01+0000', 'yyyy-MM-ddZ'))", 0L)
+            arguments("timestamp(time('1970-01-01+0000', 'yyyy-MM-ddZ'))", 0L),
+            // type conversion
+            arguments("int(5)", 5),
+            arguments("int(long(5))", 5),
+            arguments("int(5.2)", 5),
+            arguments("int(decimal(5.2))", 5),
+            arguments("int('5')", 5),
+            arguments("long(int(6))", 6L),
+            arguments("long(6)", 6L),
+            arguments("long(6.3)", 6L),
+            arguments("long(decimal(6.3))", 6L),
+            arguments("long('6')", 6L),
+            arguments("double(int(7))", 7.0),
+            arguments("double(long(7))", 7.0),
+            arguments("double(7.4)", 7.4),
+            arguments("double(decimal(7.4))", 7.4),
+            arguments("double('7.4')", 7.4),
+            arguments("decimal(int(8))", BigDecimal.valueOf(8)),
+            arguments("decimal(long(8))", BigDecimal.valueOf(8)),
+            arguments("decimal(8.5)", BigDecimal.valueOf(8.5)),
+            arguments("decimal(decimal(8.5))", BigDecimal.valueOf(8.5)),
+            arguments("decimal('8.5')", new BigDecimal("8.5")),
+            arguments("substring(string(TAU), 0, 4)", "6.28")
         );
     }
 

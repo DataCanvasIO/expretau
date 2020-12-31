@@ -24,9 +24,6 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
@@ -40,6 +37,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.processing.AbstractProcessor;
@@ -70,7 +68,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
 
     @Nonnull
     private static String getSimpleName(@Nonnull TypeName type) {
-        String name = type.toString()
+        String name = type.box().toString()
             .replaceAll("<.*>", "")
             .replace("[]", "Array");
         return name.substring(name.lastIndexOf('.') + 1);
@@ -96,19 +94,28 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         return b.toString();
     }
 
-    private static TypeName getBoxedType(@Nonnull TypeName type) {
-        return type.isPrimitive() ? type.box() : type;
-    }
-
-    private static TypeName getBoxedType(TypeMirror type) {
-        return getBoxedType(TypeName.get(type));
+    private static Stream<TypeName> getParaTypeStream(@Nonnull ExecutableElement element) {
+        return element.getParameters().stream()
+            .map(VariableElement::asType)
+            .map(TypeName::get);
     }
 
     private static List<TypeName> getParaTypeList(@Nonnull ExecutableElement element) {
-        return element.getParameters().stream()
-            .map(VariableElement::asType)
-            .map(EvaluatorsProcessor::getBoxedType)
-            .collect(Collectors.toList());
+        return getParaTypeStream(element).collect(Collectors.toList());
+    }
+
+    /**
+     * Calculate a weight for a method by its parameter types, for sorting.
+     *
+     * @param element   the method element
+     * @param typeOrder the defined types order
+     * @return an integer stand for the weight
+     */
+    private static int methodWeight(ExecutableElement element, @Nonnull List<TypeName> typeOrder) {
+        return getParaTypeStream(element)
+            .map(TypeName::box)
+            .mapToInt(typeOrder::indexOf)
+            .sum();
     }
 
     @Nonnull
@@ -172,46 +179,50 @@ public class EvaluatorsProcessor extends AbstractProcessor {
 
     @Nonnull
     private static CodeBlock codeConvertPara(
-        String paraName,
+        @Nonnull String paraName,
         int paraIndex,
-        TypeName required,
-        TypeName actual
+        @Nonnull TypeName required,
+        @Nonnull TypeName actual
     ) {
         CodeBlock.Builder builder = CodeBlock.builder();
         boolean converted = false;
-        if (actual != null) {
-            if (required.equals(TypeName.get(BigDecimal.class))) {
-                if (actual.equals(TypeName.get(Double.class))
-                    || actual.equals(TypeName.get(Long.class))
-                    || actual.equals(TypeName.get(Integer.class))
-                ) {
-                    builder.add("$T.valueOf(($T) $L[$L])", BigDecimal.class, actual, paraName, paraIndex);
-                    converted = true;
-                }
-            } else if (required.equals(TypeName.get(Double.class))) {
-                if (actual.equals(TypeName.get(BigDecimal.class))
-                    || actual.equals(TypeName.get(Long.class))
-                    || actual.equals(TypeName.get(Integer.class))
-                ) {
-                    builder.add("(($T) $L[$L]).doubleValue()", actual, paraName, paraIndex);
-                    converted = true;
-                }
-            } else if (required.equals(TypeName.get(Long.class))) {
-                if (actual.equals((TypeName.get(BigDecimal.class)))
-                    || actual.equals(TypeName.get(Integer.class))
-                    || actual.equals(TypeName.get(Double.class))
-                ) {
-                    builder.add("(($T) $L[$L]).longValue()", actual, paraName, paraIndex);
-                    converted = true;
-                }
-            } else if (required.equals(TypeName.get(Integer.class))) {
-                if (actual.equals(TypeName.get(BigDecimal.class))
-                    || actual.equals(TypeName.get(Double.class))
-                    || actual.equals(TypeName.get(Long.class))
-                ) {
-                    builder.add("(($T) $L[$L]).intValue()", actual, paraName, paraIndex);
-                    converted = true;
-                }
+        if (required.equals(TypeName.get(BigDecimal.class))) {
+            if (actual.equals(TypeName.get(Double.class))
+                || actual.equals(TypeName.get(Long.class))
+                || actual.equals(TypeName.get(Integer.class))
+            ) {
+                builder.add("$T.valueOf(($T) $L[$L])", BigDecimal.class, actual, paraName, paraIndex);
+                converted = true;
+            }
+        } else if (required.equals(TypeName.get(Double.class))
+            || required.equals(TypeName.DOUBLE)
+        ) {
+            if (actual.equals(TypeName.get(BigDecimal.class))
+                || actual.equals(TypeName.get(Long.class))
+                || actual.equals(TypeName.get(Integer.class))
+            ) {
+                builder.add("(($T) $L[$L]).doubleValue()", actual, paraName, paraIndex);
+                converted = true;
+            }
+        } else if (required.equals(TypeName.get(Long.class))
+            || required.equals(TypeName.LONG)
+        ) {
+            if (actual.equals((TypeName.get(BigDecimal.class)))
+                || actual.equals(TypeName.get(Integer.class))
+                || actual.equals(TypeName.get(Double.class))
+            ) {
+                builder.add("(($T) $L[$L]).longValue()", actual, paraName, paraIndex);
+                converted = true;
+            }
+        } else if (required.equals(TypeName.get(Integer.class))
+            || required.equals(TypeName.INT)
+        ) {
+            if (actual.equals(TypeName.get(BigDecimal.class))
+                || actual.equals(TypeName.get(Double.class))
+                || actual.equals(TypeName.get(Long.class))
+            ) {
+                builder.add("(($T) $L[$L]).intValue()", actual, paraName, paraIndex);
+                converted = true;
             }
         }
         if (!converted) {
@@ -331,6 +342,8 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             .map(AnnotationValue::getValue)
             .map(Object::toString)
             .map(processingEnv.getElementUtils()::getTypeElement)
+            // Here `null` is returned for primitive types, so filter out it.
+            .filter(Objects::nonNull)
             .map(Element::asType)
             .map(TypeName::get)
             .collect(Collectors.toList());
@@ -357,22 +370,20 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         }
         String packageName = info.getPackageName();
         ProcessorUtils.saveSourceFile(processingEnv, packageName, builder.build());
-        processingEnv.getMessager().printMessage(Diagnostic.Kind.NOTE,
+        // Not a warning, only want to show it
+        processingEnv.getMessager().printMessage(Diagnostic.Kind.MANDATORY_WARNING,
             "Evaluator \"" + className + "\" generated in package \"" + packageName + "\".");
     }
 
     private void generateEvaluator(
-        @Nonnull ExecutableElement element,
-        @Nonnull EvaluatorsInfo info,
-        @Nullable List<TypeName> newParas
+        @Nonnull final ExecutableElement element,
+        @Nonnull final List<TypeName> paras,
+        @Nonnull final List<TypeName> newParas,
+        @Nonnull final EvaluatorsInfo info
     ) {
         String methodName = element.getSimpleName().toString();
         Map<String, EvaluatorInfo> evaluatorMap = info.getEvaluatorMap()
             .computeIfAbsent(methodName, k -> new HashMap<>());
-        List<TypeName> paras = getParaTypeList(element);
-        if (newParas == null) {
-            newParas = paras;
-        }
         String evaluatorKey = getEvaluatorKey(newParas);
         if (evaluatorMap.containsKey(evaluatorKey)) {
             return;
@@ -387,7 +398,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             return;
         }
         String paraName = evalMethod.getParameters().get(0).getSimpleName().toString();
-        TypeName returnType = getBoxedType(element.getReturnType());
+        TypeName returnType = TypeName.get(element.getReturnType()).box();
         MethodSpec evalSpec = MethodSpec.overriding(evalMethod)
             .returns(returnType)
             .addCode(codeEvalParas(info, methodName, paraName, paras, newParas))
@@ -405,46 +416,56 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         }
         String className = getClassName(methodName, newParas);
         generateEvaluatorClassFile(info, className, evalSpec, typeCodeSpec);
-        evaluatorMap.put(evaluatorKey, new EvaluatorInfo(className, returnType, newParas));
+        // must copy newParas, it is volatile.
+        evaluatorMap.put(
+            evaluatorKey,
+            new EvaluatorInfo(className, returnType, new ArrayList<>(newParas))
+        );
     }
 
     private void induceEvaluators(ExecutableElement element, EvaluatorsInfo info) {
         List<TypeName> paras = getParaTypeList(element);
-        induceEvaluatorsRecursive(element, info, paras, 0);
+        // must make a copy of paras
+        List<TypeName> newParas = paras.stream()
+            .map(TypeName::box)
+            .collect(Collectors.toList());
+        induceEvaluatorsRecursive(element, paras, newParas, info, 0);
     }
 
     private void tryDescentType(
-        ExecutableElement element,
-        EvaluatorsInfo info,
+        @Nonnull final ExecutableElement element,
+        @Nonnull final List<TypeName> paras,
         @Nonnull List<TypeName> newParas,
-        int pos,
-        TypeName newTypeName
+        @Nonnull final EvaluatorsInfo info,
+        int pos
     ) {
-        TypeName oldType = newParas.get(pos);
-        newParas.set(pos, newTypeName);
-        induceEvaluatorsRecursive(element, info, newParas, pos + 1);
-        newParas.set(pos, oldType);
+        List<TypeName> induceSequence = info.getInduceSequence();
+        TypeName type = paras.get(pos);
+        int index = induceSequence.indexOf(type.box());
+        if (index >= 0) {
+            for (int i = index + 1; i < induceSequence.size(); ++i) {
+                TypeName newTypeName = induceSequence.get(i);
+                TypeName oldType = newParas.get(pos);
+                newParas.set(pos, newTypeName);
+                induceEvaluatorsRecursive(element, paras, newParas, info, pos + 1);
+                newParas.set(pos, oldType);
+            }
+        }
     }
 
     private void induceEvaluatorsRecursive(
-        ExecutableElement element,
-        EvaluatorsInfo info,
+        @Nonnull final ExecutableElement element,
+        @Nonnull final List<TypeName> paras,
         @Nonnull List<TypeName> newParas,
+        @Nonnull final EvaluatorsInfo info,
         int pos
     ) {
         if (pos >= newParas.size()) {
-            generateEvaluator(element, info, new ArrayList<>(newParas));
+            generateEvaluator(element, paras, newParas, info);
             return;
         }
-        induceEvaluatorsRecursive(element, info, newParas, pos + 1);
-        TypeName type = getParaTypeList(element).get(pos);
-        List<TypeName> induceSequence = info.getInduceSequence();
-        int index = induceSequence.indexOf(type);
-        if (index >= 0) {
-            for (int i = index + 1; i < induceSequence.size(); ++i) {
-                tryDescentType(element, info, newParas, pos, induceSequence.get(i));
-            }
-        }
+        induceEvaluatorsRecursive(element, paras, newParas, info, pos + 1);
+        tryDescentType(element, paras, newParas, info, pos);
     }
 
     private void generateEvaluatorFactories(@Nonnull EvaluatorsInfo info) {
@@ -497,12 +518,7 @@ public class EvaluatorsProcessor extends AbstractProcessor {
         info.setOriginClassName(TypeName.get(element.asType()));
         info.setEvaluatorMap(new HashMap<>());
         List<ExecutableElement> executableElements = ElementFilter.methodsIn(element.getEnclosedElements());
-        executableElements.forEach(e -> generateEvaluator(e, info, null));
-        executableElements.sort(Comparator.comparingInt(
-            (ExecutableElement e) -> -getParaTypeList(e).stream()
-                .mapToInt(info.getInduceSequence()::indexOf)
-                .sum()
-        ));
+        executableElements.sort(Comparator.comparingInt(e -> -methodWeight(e, info.getInduceSequence())));
         executableElements.forEach(e -> induceEvaluators(e, info));
         generateEvaluatorFactories(info);
     }
@@ -561,28 +577,5 @@ public class EvaluatorsProcessor extends AbstractProcessor {
             }
         }
         return true;
-    }
-
-    @Getter
-    @RequiredArgsConstructor
-    public static class EvaluatorInfo {
-        private final String className;
-        private final TypeName returnTypeName;
-        private final List<TypeName> paraTypeNames;
-    }
-
-    @Getter
-    @Setter
-    @RequiredArgsConstructor
-    public static class EvaluatorsInfo {
-        private final TypeElement evaluatorKey;
-        private final TypeElement evaluatorBase;
-        private final TypeElement evaluatorFactory;
-        private final TypeElement universalEvaluator;
-        private final List<TypeName> induceSequence;
-
-        private String packageName;
-        private TypeName originClassName;
-        private Map<String, Map<String, EvaluatorInfo>> evaluatorMap;
     }
 }

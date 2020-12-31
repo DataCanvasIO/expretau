@@ -20,6 +20,7 @@ import io.github.datacanvasio.expretau.runtime.exception.FailGetEvaluator;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
@@ -47,9 +48,13 @@ public abstract class EvaluatorFactory implements Serializable {
         if (evaluator != null) {
             return evaluator;
         }
-        evaluator = evaluators.get(EvaluatorKey.UNIVERSAL);
-        if (evaluator != null) {
-            return evaluator;
+        List<EvaluatorKey> keys = key.generalize();
+        // The first one is copy of `key`
+        for (int i = 1; i < keys.size(); ++i) {
+            evaluator = evaluators.get(keys.get(i));
+            if (evaluator != null) {
+                return evaluator;
+            }
         }
         throw new FailGetEvaluator(this, key.getParaTypeCodes());
     }
