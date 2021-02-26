@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  ~ Copyright 2020 DataCanvas
+  ~ Copyright 2020 lasyard@github.com
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -22,9 +22,13 @@
 <module name="Checker">
     <property name="charset" value="UTF-8"/>
 
-    <property name="severity" value="warning"/>
+    <property name="severity" value="error"/>
 
     <property name="fileExtensions" value="java, properties, xml"/>
+
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/suppression.xml"/>
+    </module>
 
     <module name="FileTabCharacter">
         <property name="eachLine" value="true"/>
@@ -34,8 +38,16 @@
         <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://"/>
     </module>
     <module name="Header">
-        <property name="headerFile" value="checkstyle/apache_2_license.java"/>
+        <property name="headerFile" value="${config_loc}/apache_2_license.java.txt"/>
         <property name="fileExtensions" value="java"/>
+    </module>
+    <module name="Header">
+        <property name="headerFile" value="${config_loc}/apache_2_license.properties.txt"/>
+        <property name="fileExtensions" value="properties"/>
+    </module>
+    <module name="Header">
+        <property name="headerFile" value="${config_loc}/apache_2_license.xml.txt"/>
+        <property name="fileExtensions" value="xml"/>
     </module>
 
     <module name="TreeWalker">
@@ -196,7 +208,7 @@
         </module>
         <module name="MissingJavadocMethod">
             <property name="scope" value="public"/>
-            <property name="allowedAnnotations" value="Override, Test, ParameterizedTest"/>
+            <property name="allowedAnnotations" value="Override, Test, Parameterized"/>
             <property name="ignoreMethodNamesRegex" value="main"/>
         </module>
         <module name="MethodName">
